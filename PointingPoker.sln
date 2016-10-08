@@ -14,6 +14,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PointingPoker", "src\Pointi
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PointingPoker", "PointingPoker\PointingPoker.sqlproj", "{95EE6532-30BF-4EDD-B71C-8918322D6F9D}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PointingPoker.Tests", "src\PointingPoker.Tests\PointingPoker.Tests.xproj", "{82725D99-E94B-434B-93B8-BA1A598AF5FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,11 +32,16 @@ Global
 		{95EE6532-30BF-4EDD-B71C-8918322D6F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95EE6532-30BF-4EDD-B71C-8918322D6F9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{95EE6532-30BF-4EDD-B71C-8918322D6F9D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{82725D99-E94B-434B-93B8-BA1A598AF5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82725D99-E94B-434B-93B8-BA1A598AF5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82725D99-E94B-434B-93B8-BA1A598AF5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82725D99-E94B-434B-93B8-BA1A598AF5FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F8090AEE-8A87-4578-8C8B-B30E36BE12E4} = {F167A752-4DDE-42D0-91B2-0928113CCB8D}
+		{82725D99-E94B-434B-93B8-BA1A598AF5FB} = {F167A752-4DDE-42D0-91B2-0928113CCB8D}
 	EndGlobalSection
 EndGlobal
