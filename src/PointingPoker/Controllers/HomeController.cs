@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PointingPoker.DataAccess;
 
 namespace PointingPoker.Controllers
 {
+
     public class HomeController : Controller
-    { 
+    {
+        public readonly IUserService _userService;
+        public HomeController(IUserService userService)
+        {
+            _userService = userService;
+        }
         public ViewResult Index()
         {
-            return View();
+            var users = _userService.GetUsers();
+            return View(users);
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using PointingPoker.DataAccess;
+using PointingPoker.DataAccess.Queries;
 
 namespace PointingPoker
 {
@@ -21,6 +23,9 @@ namespace PointingPoker
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IDbConnectionProvider>(new DbConnectionProvider(Configuration));
+            services.AddTransient<IUserQueries, UserQueries>();
+            services.AddTransient<IUserService, UserService>();
             services.AddMvc();
         }
         
