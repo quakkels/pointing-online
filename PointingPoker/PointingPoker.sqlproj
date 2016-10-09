@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users.sql" />
+    <Build Include="Cards.sql" />
+    <Build Include="Points.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PointingPoker.refactorlog" />

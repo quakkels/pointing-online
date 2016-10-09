@@ -7,4 +7,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Username" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="262f2a96-2496-4f94-bdc8-c54ca3ea94dd" ChangeDateTime="10/09/2016 20:54:18">
+    <Property Name="ElementName" Value="[dbo].[Cards].[OpenForPointing]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Cards]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsPointingClosed" />
+  </Operation>
 </Operations>

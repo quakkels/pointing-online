@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Cards]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Description] NVARCHAR(512) NOT NULL, 
+    [CreatedBy] UNIQUEIDENTIFIER NOT NULL FOREIGN KEY (CreatedBy) REFERENCES Users(Id), 
+    [IsPointingClosed] BIT NOT NULL DEFAULT 0
+)
