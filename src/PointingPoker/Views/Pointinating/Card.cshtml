@@ -1,0 +1,19 @@
+﻿@model PointingPoker.Models.CardInfoViewModel
+@Html.Partial("_MemberNav")
+<h1>Card</h1>
+<form method="post">
+    @Html.HiddenFor(x => x.CreatedBy)
+    <p>
+        @Html.LabelFor(x => x.Description)
+        @Html.TextBoxFor(x => x.Description)
+        @Html.ValidationMessageFor(x => x.Description)
+    </p>
+    <p>
+        @Html.LabelFor(x=> x.IsPointingClosed, "Closed")
+        @Html.CheckBoxFor(x => x.IsPointingClosed)
+        @Html.ValidationMessageFor(x => x.IsPointingClosed)
+    </p>
+    <p>
+        <button type="submit">Save</button>
+    </p>
+</form>
