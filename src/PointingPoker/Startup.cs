@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using PointingPoker.DataAccess;
 using PointingPoker.DataAccess.Queries;
+using PointingPoker.DataAccess.Commands;
 
 namespace PointingPoker
 {
@@ -26,6 +27,7 @@ namespace PointingPoker
             services.AddSingleton<IDbConnectionProvider>(new DbConnectionProvider(Configuration));
             services.AddTransient<IUserQueries, UserQueries>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserCommands, UserCommands>();
             services.AddMvc();
         }
         

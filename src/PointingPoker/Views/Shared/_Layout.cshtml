@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="~/styles/main.css" />
 </head>
 <body>
-    @RenderBody()
+    <header></header>
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+            <li><a href="@Url.Action("Register", "User")">Register</a></li>
+            <li><a href="@Url.Action("Index", "User")">List Users</a></li>
+        </ul>
+    </nav>
+    <div>
+        @RenderBody()
+    </div>
 </body>
 </html>

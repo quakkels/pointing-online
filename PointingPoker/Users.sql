@@ -5,3 +5,7 @@
     [Email] VARCHAR(256) NOT NULL, 
     [PasswordHash] VARCHAR(512) NULL
 )
+
+GO
+
+CREATE INDEX [IX_Users_Column] ON [dbo].[Users] (Username)

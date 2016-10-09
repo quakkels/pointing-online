@@ -1,0 +1,28 @@
+﻿@model PointingPoker.Models.RegisterViewModel
+<h1>Register with Pointilating/Pointr/Estimatr/Somethingr</h1>
+<form method="post">
+    @Html.HiddenFor(x => x.Id)
+    <p>
+        @Html.LabelFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username)
+        @Html.ValidationMessageFor(x => x.Username)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Email)
+        @Html.TextBoxFor(x => x.Email)
+        @Html.ValidationMessageFor(x => x.Email)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password)
+        @Html.ValidationMessageFor(x => x.Password)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.VerifyPassword)
+        @Html.PasswordFor(x => x.VerifyPassword)
+        @Html.ValidationMessageFor(x => x.VerifyPassword)
+    </p>
+    <p>
+        <button type="submit">Sign Up</button>
+    </p>
+</form>
