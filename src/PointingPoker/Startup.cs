@@ -28,6 +28,10 @@ namespace PointingPoker
             services.AddTransient<IUserQueries, UserQueries>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserCommands, UserCommands>();
+            services.AddTransient<ICardService, CardService>();
+            services.AddTransient<ICardCommands, CardCommands>();
+            services.AddTransient<ICardQueries, CardQueries>();
+
             services.AddMvc();
         }
         
