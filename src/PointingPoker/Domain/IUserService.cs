@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PointingPoker.DataAccess
+namespace PointingPoker.Domain
 {
     public interface IUserService
     {

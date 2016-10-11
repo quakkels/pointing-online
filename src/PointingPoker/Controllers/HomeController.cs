@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PointingPoker.DataAccess;
+using PointingPoker.Domain;
 
 namespace PointingPoker.Controllers
 {

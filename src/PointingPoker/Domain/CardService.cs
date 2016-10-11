@@ -3,7 +3,7 @@ using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
 using System;
 
-namespace PointingPoker.DataAccess
+namespace PointingPoker.Domain
 {
     public class CardService : ICardService
     {

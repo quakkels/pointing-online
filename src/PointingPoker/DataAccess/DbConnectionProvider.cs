@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 namespace PointingPoker.DataAccess
@@ -8,10 +7,9 @@ namespace PointingPoker.DataAccess
     {
         private string _pointingPokerConnectionString;
 
-        public DbConnectionProvider(IConfigurationRoot configuration)
+        public DbConnectionProvider(string pointingPokerConnectionString)
         {
-            _pointingPokerConnectionString = configuration
-                .GetConnectionString("PointingPoker");
+            _pointingPokerConnectionString = pointingPokerConnectionString;
         }
 
         public IDbConnection GetOpenPointingPokerConnection()

@@ -4,8 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using PointingPoker.DataAccess;
-using PointingPoker.DataAccess.Queries;
-using PointingPoker.DataAccess.Commands;
+using PointingPoker.Domain;
 
 namespace PointingPoker
 {
@@ -24,13 +23,9 @@ namespace PointingPoker
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDbConnectionProvider>(new DbConnectionProvider(Configuration));
-            services.AddTransient<IUserQueries, UserQueries>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IUserCommands, UserCommands>();
-            services.AddTransient<ICardService, CardService>();
-            services.AddTransient<ICardCommands, CardCommands>();
-            services.AddTransient<ICardQueries, CardQueries>();
+            services.AddDataAccess(Configuration.GetConnectionString("PointingPoker"));
+
+            services.AddDomainServices();
 
             services.AddMvc();
         }

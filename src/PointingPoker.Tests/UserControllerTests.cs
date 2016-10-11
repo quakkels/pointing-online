@@ -1,6 +1,6 @@
 ﻿using Moq;
 using PointingPoker.Controllers;
-using PointingPoker.DataAccess;
+using PointingPoker.Domain;
 using PointingPoker.Models;
 using System;
 using Xunit;

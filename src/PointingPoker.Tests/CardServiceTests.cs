@@ -1,5 +1,5 @@
 ﻿using Moq;
-using PointingPoker.DataAccess;
+using PointingPoker.Domain;
 using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;

@@ -4,7 +4,7 @@ using PointingPoker.DataAccess.Queries;
 using System;
 using System.Collections.Generic;
 
-namespace PointingPoker.DataAccess
+namespace PointingPoker.Domain
 {
     public class UserService : IUserService
     {

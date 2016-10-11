@@ -1,6 +1,6 @@
 ﻿using PointingPoker.DataAccess.Models;
 
-namespace PointingPoker.DataAccess
+namespace PointingPoker.Domain
 {
     public interface ICardService
     {
