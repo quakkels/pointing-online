@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using PointingPoker.DataAccess;
 using PointingPoker.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace PointingPoker
 {
@@ -23,10 +24,10 @@ namespace PointingPoker
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddAuthentication();
             services.AddDataAccess(Configuration.GetConnectionString("PointingPoker"));
-
             services.AddDomainServices();
-
             services.AddMvc();
         }
         
@@ -39,7 +40,14 @@ namespace PointingPoker
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                LoginPath = "/home/index",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+            });
+
             app.UseStaticFiles();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

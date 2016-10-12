@@ -8,6 +8,7 @@ namespace PointingPoker.Tests
 {
     public class UserControllerTests
     {
+        private Mock<IAuthService> _authServiceMock;
         private Mock<IUserService> _userServiceMock;
         private ProfileViewModel _profileViewModel;
 
@@ -21,6 +22,8 @@ namespace PointingPoker.Tests
                 Password = "password",
                 VerifyPassword = "password"                        
             };
+
+            _authServiceMock = new Mock<IAuthService>();
 
             _userServiceMock = new Mock<IUserService>();
             _userServiceMock
@@ -43,6 +46,7 @@ namespace PointingPoker.Tests
             Setup();
             _profileViewModel.Password = null;
             var controller = new UserController(
+                _authServiceMock.Object,
                 _userServiceMock.Object);
 
             // act
@@ -69,6 +73,7 @@ namespace PointingPoker.Tests
             // arrange
             Setup();
             var controller = new UserController(
+                _authServiceMock.Object,
                 _userServiceMock.Object);
 
             // act

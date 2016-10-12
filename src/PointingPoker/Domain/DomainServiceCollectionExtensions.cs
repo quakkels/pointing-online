@@ -6,8 +6,9 @@ namespace PointingPoker.Domain
     {
         public static void AddDomainServices(this IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ICardService, CardService>();
+            services.AddTransient<IUserService, UserService>();
         }
     }
 }

@@ -2,15 +2,21 @@
 using PointingPoker.Domain;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PointingPoker.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IAuthService _authService;
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(
+            IAuthService authService,
+            IUserService userService)
         {
+            _authService = authService;
             _userService = userService;
         }
 
@@ -47,6 +53,7 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ViewResult Profile(string username)
         {
             var user = new ProfileViewModel(
@@ -55,7 +62,7 @@ namespace PointingPoker.Controllers
             return View(user);
         }
 
-        [HttpPost]
+        [Authorize, HttpPost]
         public ViewResult Profile(ProfileViewModel model)
         {
             if (!ModelState.IsValid)
@@ -88,6 +95,20 @@ namespace PointingPoker.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<ActionResult> SignIn()
+        {
+            var user = _userService.GetUserByUsername("quakkels");
+            await _authService.SignIn(user.Id);
+
+            return RedirectToAction(nameof(Profile));
+        }
+
+        public async Task<ActionResult> SignOut()
+        {
+            await _authService.SignOut();
+            return Redirect("/");
         }
     }
 }
