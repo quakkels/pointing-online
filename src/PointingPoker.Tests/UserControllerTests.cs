@@ -1,5 +1,6 @@
 ﻿using Moq;
 using PointingPoker.Controllers;
+using PointingPoker.DataAccess.Models;
 using PointingPoker.Domain;
 using PointingPoker.Models;
 using System;
@@ -11,6 +12,7 @@ namespace PointingPoker.Tests
         private Mock<ISecurityService> _securityServiceMock;
         private Mock<IUserService> _userServiceMock;
         private ProfileViewModel _profileViewModel;
+        private User _user;
 
         private void Setup()
         {
@@ -23,7 +25,17 @@ namespace PointingPoker.Tests
                 VerifyPassword = "password"                        
             };
 
+            _user = new User
+            {
+                UserName = "user",
+                PasswordHash = "match",
+                Email = "email"
+            };
+
             _securityServiceMock = new Mock<ISecurityService>();
+            _securityServiceMock
+                .Setup(x => x.VerifyUserPassword(It.Is<string>(y => y == _user.UserName), It.Is<string>(y => y == _user.PasswordHash)))
+                .Returns(true);
 
             _userServiceMock = new Mock<IUserService>();
             _userServiceMock
@@ -37,6 +49,9 @@ namespace PointingPoker.Tests
                     _profileViewModel.UserName,
                     _profileViewModel.Email))
                 .Returns(true);
+            _userServiceMock
+                .Setup(x => x.GetUserByUsername(It.Is<string>(y => y == _user.UserName)))
+                .Returns(_user);
         }
 
         [Fact]
@@ -92,6 +107,38 @@ namespace PointingPoker.Tests
                     _profileViewModel.Id,
                     _profileViewModel.Password),
                 Times.Once);
+        }
+
+        [Fact]
+        public void WillNotSignInWithBadCredentials()
+        {
+            // arrange
+            Setup();
+            var controller = new UserController(
+                _securityServiceMock.Object,
+                _userServiceMock.Object);
+
+            // act
+            var result = controller.SignIn(new SignInViewModel { UserName = "user", Password = "bad" });
+
+            // assert
+            _securityServiceMock.Verify(x => x.SignIn(It.IsAny<Guid>()), Times.Never);
+        }
+
+        [Fact]
+        public void WillSignInWithGoodCredentials()
+        {
+            // arrange
+            Setup();
+            var controller = new UserController(
+                _securityServiceMock.Object,
+                _userServiceMock.Object);
+
+            // act
+            var result = controller.SignIn(new SignInViewModel { UserName = "user", Password = "match" });
+
+            // assert
+            _securityServiceMock.Verify(x => x.SignIn(It.IsAny<Guid>()), Times.Once);
         }
     }
 }
