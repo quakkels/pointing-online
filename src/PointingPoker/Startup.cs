@@ -25,6 +25,7 @@ namespace PointingPoker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddAuthentication();
             services.AddDataAccess(Configuration.GetConnectionString("PointingPoker"));
             services.AddDomainServices();

@@ -9,14 +9,14 @@ namespace PointingPoker.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IAuthService _authService;
+        private readonly ISecurityService _securityService;
         private readonly IUserService _userService;
 
         public UserController(
-            IAuthService authService,
+            ISecurityService securityService,
             IUserService userService)
         {
-            _authService = authService;
+            _securityService = securityService;
             _userService = userService;
         }
 
@@ -100,14 +100,14 @@ namespace PointingPoker.Controllers
         public async Task<ActionResult> SignIn()
         {
             var user = _userService.GetUserByUsername("quakkels");
-            await _authService.SignIn(user.Id);
+            await _securityService.SignIn(user.Id);
 
             return RedirectToAction(nameof(Profile));
         }
 
         public async Task<ActionResult> SignOut()
         {
-            await _authService.SignOut();
+            await _securityService.SignOut();
             return Redirect("/");
         }
     }

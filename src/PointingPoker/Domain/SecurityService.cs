@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace PointingPoker.Domain
 {
-    public class AuthService : IAuthService
+    public class SecurityService : ISecurityService
     {
         private HttpContext _httpContext;
-        public AuthService(IHttpContextAccessor httpContextAccessor)
+        public SecurityService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContext = httpContextAccessor.HttpContext;
         }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PointingPoker.Domain
 {
-    public interface IAuthService
+    public interface ISecurityService
     {
         Task SignIn(Guid userId);
         Task SignOut();
