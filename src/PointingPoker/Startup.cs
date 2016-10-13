@@ -42,7 +42,7 @@ namespace PointingPoker
             }
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
-                LoginPath = "/home/index",
+                LoginPath = "/User/SignIn",
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
             });

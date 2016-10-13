@@ -3,11 +3,11 @@
 <h1>Profile</h1>
 <form method="post">
     @Html.HiddenFor(x => x.Id)
-    @Html.HiddenFor(x => x.Username)
+    @Html.HiddenFor(x => x.UserName)
     <p>
-        @Html.LabelFor(x => x.Username)
-        @Html.TextBoxFor(x => x.Username, new { disabled = "disabled" })
-        @Html.ValidationMessageFor(x => x.Username)
+        @Html.LabelFor(x => x.UserName)
+        @Html.TextBoxFor(x => x.UserName, new { disabled = "disabled" })
+        @Html.ValidationMessageFor(x => x.UserName)
     </p>
     <p>
         @Html.LabelFor(x => x.Email)

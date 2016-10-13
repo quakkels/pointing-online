@@ -19,7 +19,7 @@ namespace PointingPoker.Tests
         {
             _user = new User
             {
-                Username = "un1",
+                UserName = "un1",
                 Email = "em1@example.com",
                 PasswordHash = "password1"
             };
@@ -34,7 +34,7 @@ namespace PointingPoker.Tests
                 {
                     new User{
                         Id = Guid.NewGuid(),
-                        Username = "bob",
+                        UserName = "bob",
                         Email = "email@email"
                     }
                 });
@@ -51,7 +51,7 @@ namespace PointingPoker.Tests
             var result = userService.GetUsers() as List<User>;
 
             // assert
-            Assert.Equal("bob", result[0].Username);
+            Assert.Equal("bob", result[0].UserName);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace PointingPoker.Tests
             // arrange
             Setup();
             _userQueriesMock
-                .Setup(x => x.GetUserByUsername(It.IsAny<string>()))
+                .Setup(x => x.GetUserByUserName(It.IsAny<string>()))
                 .Returns(_user);
             var service = new UserService(
                 _userQueriesMock.Object,
@@ -100,7 +100,7 @@ namespace PointingPoker.Tests
             var result = service.GetUserByUsername("any");
 
             // assert
-            Assert.Equal("un1", result.Username);
+            Assert.Equal("un1", result.UserName);
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace PointingPoker.Tests
             // arrange
             Setup();
             _userQueriesMock
-                .Setup(x => x.DoesUsernameExist(It.IsAny<Guid>(), It.IsAny<string>()))
+                .Setup(x => x.DoesUserNameExist(It.IsAny<Guid>(), It.IsAny<string>()))
                 .Returns(true);
             var service = new UserService(
                 _userQueriesMock.Object,

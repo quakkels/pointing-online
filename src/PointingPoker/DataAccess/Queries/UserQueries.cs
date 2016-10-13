@@ -23,7 +23,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public bool DoesUsernameExist(string username)
+        public bool DoesUsernameExist(string userName)
         {
             var query = @"
                 select 
@@ -37,12 +37,12 @@ namespace PointingPoker.DataAccess.Queries
                     end as [exists]";
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var exists = conn.Query<bool>(query, new { username });
+                var exists = conn.Query<bool>(query, new { userName });
                 return exists.FirstOrDefault();
             }
         }
 
-        public bool DoesUsernameExist(Guid currentId, string username)
+        public bool DoesUserNameExist(Guid currentId, string userName)
         {
             var query = @"
                 select 
@@ -58,12 +58,12 @@ namespace PointingPoker.DataAccess.Queries
                     end as [exists]";
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var exists = conn.Query<bool>(query, new { username, id = currentId });
+                var exists = conn.Query<bool>(query, new { userName, id = currentId });
                 return exists.FirstOrDefault();
             }
         }
 
-        public User GetUserByUsername(string username)
+        public User GetUserByUserName(string userName)
         {
             var query = @"
                 select top 1
@@ -75,8 +75,24 @@ namespace PointingPoker.DataAccess.Queries
 
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var user = conn.Query<User>(query, new { username });
+                var user = conn.Query<User>(query, new { userName });
                 return user.FirstOrDefault();
+            }
+        }
+
+        public string GetPasswordHashByUserName(string userName)
+        {
+            var query = @"
+                select top 1
+                    PasswordHash
+                from
+                    Users
+                where
+                    UserName = @userName";
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var passwordHash = conn.Query<string>(query, new { userName });
+                return passwordHash.FirstOrDefault();
             }
         }
     }

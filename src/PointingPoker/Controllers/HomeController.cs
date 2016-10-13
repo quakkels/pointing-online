@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointingPoker.Domain;
 
 namespace PointingPoker.Controllers
@@ -11,6 +12,8 @@ namespace PointingPoker.Controllers
         {
             _userService = userService;
         }
+
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var users = _userService.GetUsers();

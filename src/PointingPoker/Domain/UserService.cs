@@ -18,7 +18,7 @@ namespace PointingPoker.Domain
         }
         public User GetUserByUsername(string username)
         {
-            return _userQueries.GetUserByUsername(username);
+            return _userQueries.GetUserByUserName(username);
         }
 
         public IEnumerable<User> GetUsers()
@@ -29,7 +29,7 @@ namespace PointingPoker.Domain
 
         public bool CreateUser(User user)
         {
-            if (_userQueries.DoesUsernameExist(user.Username))
+            if (_userQueries.DoesUsernameExist(user.UserName))
             {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace PointingPoker.Domain
                 return false;
             }
 
-            if (_userQueries.DoesUsernameExist(id, username))
+            if (_userQueries.DoesUserNameExist(id, username))
             {
                 return false;
             }

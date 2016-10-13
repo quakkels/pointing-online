@@ -17,7 +17,7 @@ namespace PointingPoker.Tests
             _profileViewModel = new ProfileViewModel
             {
                 Id = Guid.NewGuid(),
-                Username = "username",
+                UserName = "username",
                 Email = "email",
                 Password = "password",
                 VerifyPassword = "password"                        
@@ -34,7 +34,7 @@ namespace PointingPoker.Tests
             _userServiceMock
                 .Setup(x => x.UpdateUserInfo(
                     _profileViewModel.Id,
-                    _profileViewModel.Username,
+                    _profileViewModel.UserName,
                     _profileViewModel.Email))
                 .Returns(true);
         }
@@ -57,7 +57,7 @@ namespace PointingPoker.Tests
             _userServiceMock.Verify(
                 x => x.UpdateUserInfo(
                     _profileViewModel.Id,
-                    _profileViewModel.Username,
+                    _profileViewModel.UserName,
                     _profileViewModel.Email),
                 Times.Once);
             _userServiceMock.Verify(
@@ -84,7 +84,7 @@ namespace PointingPoker.Tests
             _userServiceMock.Verify(
                 x => x.UpdateUserInfo(
                     _profileViewModel.Id,
-                    _profileViewModel.Username,
+                    _profileViewModel.UserName,
                     _profileViewModel.Email),
                 Times.Once);
             _userServiceMock.Verify(

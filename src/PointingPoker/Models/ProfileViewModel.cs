@@ -10,7 +10,8 @@ namespace PointingPoker.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [EmailAddress]
         [Required]
@@ -25,7 +26,7 @@ namespace PointingPoker.Models
         public ProfileViewModel(User user)
         {
             Id = user.Id;
-            Username = user.Username;
+            UserName = user.UserName;
             Email = user.Email;
         }
     }

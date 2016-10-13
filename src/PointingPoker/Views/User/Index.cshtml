@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Username</th>
+            <th>User Name</th>
             <th>Email</th>
             <th></th>
         </tr>
@@ -14,9 +14,9 @@
     {
         <tr>
             <td>@user.Id</td>
-            <td>@user.Username</td>
+            <td>@user.UserName</td>
             <td>@user.Email</td>
-            <td><a href="@Url.Action("Profile", new { username = user.Username })">Profile</a></td>
+            <td><a href="@Url.Action("Profile", new { username = user.UserName })">Profile</a></td>
         </tr>
     }
     </tbody>

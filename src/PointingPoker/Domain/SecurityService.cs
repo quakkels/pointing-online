@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PointingPoker.DataAccess.Queries;
 
 namespace PointingPoker.Domain
 {
     public class SecurityService : ISecurityService
     {
         private HttpContext _httpContext;
-        public SecurityService(IHttpContextAccessor httpContextAccessor)
+        private IUserQueries _userQueries; 
+        public SecurityService(IHttpContextAccessor httpContextAccessor, IUserQueries userQueries)
         {
             _httpContext = httpContextAccessor.HttpContext;
+            _userQueries = userQueries;
         }
 
         public async Task SignIn(Guid userId)
@@ -35,9 +38,16 @@ namespace PointingPoker.Domain
                 .SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        public bool VerifyUserPassword(string username, string password)
+        public bool VerifyUserPassword(string userName, string password)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+
+            var retrievedPassword = _userQueries.GetPasswordHashByUserName(userName);
+
+            return password == retrievedPassword;
         }
     }
 }

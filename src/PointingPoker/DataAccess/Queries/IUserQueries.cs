@@ -7,8 +7,9 @@ namespace PointingPoker.DataAccess.Queries
     public interface IUserQueries
     {
         IEnumerable<User> GetUsers();
-        bool DoesUsernameExist(string username);
-        bool DoesUsernameExist(Guid currentId, string username);
-        User GetUserByUsername(string username);
+        bool DoesUsernameExist(string userName);
+        bool DoesUserNameExist(Guid currentId, string userName);
+        User GetUserByUserName(string userName);
+        string GetPasswordHashByUserName(string userName);
     }
 }

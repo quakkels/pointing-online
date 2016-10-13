@@ -9,7 +9,8 @@ namespace PointingPoker.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [EmailAddress, Required] 
         public string Email { get; set; }

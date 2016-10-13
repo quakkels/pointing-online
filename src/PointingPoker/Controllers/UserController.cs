@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PointingPoker.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ISecurityService _securityService;
@@ -25,12 +26,13 @@ namespace PointingPoker.Controllers
             return View(_userService.GetUsers());
         }
 
+        [AllowAnonymous]
         public ViewResult Register()
         {
             return View(new RegisterViewModel());
         }
 
-        [HttpPost]
+        [AllowAnonymous, HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -41,19 +43,18 @@ namespace PointingPoker.Controllers
             if (_userService.CreateUser(new User
             {
                 Id = model.Id,
-                Username = model.Username,
+                UserName = model.UserName,
                 Email = model.Email,
                 PasswordHash = model.Password
             }))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(SignIn));
             }
 
-            ModelState.AddModelError("Username", "This Username is taken.");
+            ModelState.AddModelError("UserName", "This user name is taken.");
             return View(model);
         }
-
-        [Authorize]
+        
         public ViewResult Profile(string username)
         {
             var user = new ProfileViewModel(
@@ -62,7 +63,7 @@ namespace PointingPoker.Controllers
             return View(user);
         }
 
-        [Authorize, HttpPost]
+        [HttpPost]
         public ViewResult Profile(ProfileViewModel model)
         {
             if (!ModelState.IsValid)
@@ -72,7 +73,7 @@ namespace PointingPoker.Controllers
 
             if (!_userService.UpdateUserInfo(
                 model.Id,
-                model.Username,
+                model.UserName,
                 model.Email))
             {
                 ModelState
@@ -97,14 +98,35 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> SignIn()
+        [AllowAnonymous]
+        public ViewResult SignIn()
         {
-            var user = _userService.GetUserByUsername("quakkels");
-            await _securityService.SignIn(user.Id);
-
-            return RedirectToAction(nameof(Profile));
+            return View(new SignInViewModel());
         }
 
+        [AllowAnonymous, HttpPost]
+        public async Task<ActionResult> SignIn(SignInViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if(!_securityService
+                .VerifyUserPassword(model.UserName, model.Password))
+            {
+                ModelState.AddModelError("UserName", "These credentials aren't valid.");
+                return View(model);
+            }
+
+            var user = _userService.GetUserByUsername(model.UserName);
+            await _securityService.SignIn(user.Id);
+
+            // todo: get user id from claim rather than passing through the url
+            return RedirectToAction(nameof(Profile), new { username = model.UserName });
+        }
+
+        [AllowAnonymous]
         public async Task<ActionResult> SignOut()
         {
             await _securityService.SignOut();
