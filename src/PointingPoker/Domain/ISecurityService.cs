@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PointingPoker.Domain.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace PointingPoker.Domain
@@ -8,5 +9,7 @@ namespace PointingPoker.Domain
         Task SignIn(Guid userId);
         Task SignOut();
         bool VerifyUserPassword(string username, string password);
+        Guid GetCurrentUserId();
+        SignedInUser GetSignedInUser();
     }
 }

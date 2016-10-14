@@ -10,6 +10,7 @@ namespace PointingPoker.DataAccess.Queries
         bool DoesUsernameExist(string userName);
         bool DoesUserNameExist(Guid currentId, string userName);
         User GetUserByUserName(string userName);
+        User GetUserById(Guid id);
         string GetPasswordHashByUserName(string userName);
     }
 }

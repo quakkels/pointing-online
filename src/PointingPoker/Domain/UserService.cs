@@ -21,6 +21,11 @@ namespace PointingPoker.Domain
             return _userQueries.GetUserByUserName(username);
         }
 
+        public User GetUserById(Guid id)
+        {
+            return _userQueries.GetUserById(id);
+        }
+
         public IEnumerable<User> GetUsers()
         {
             var users = _userQueries.GetUsers();

@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using PointingPoker.Domain
+@using PointingPoker.Domain.Models
+@inject SignedInUserService SignedInUserServ 
+@{ 
+    var isSignedIn = SignedInUserServ.IsSignedIn();
+    var user = SignedInUserServ.GetSignedInUser();
+}
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,7 +19,12 @@
         <ul>
             <li><a href="@Url.Action("Index", "Home")">Home</a></li>
             <li><a href="@Url.Action("Register", "User")">Register</a></li>
+            <li><a href="@Url.Action("SignIn", "User")">Sign In</a></li>
             <li><a href="@Url.Action("Index", "User")">List Users</a></li>
+            @if (isSignedIn)
+            {
+                <li>Welcome @user.UserName</li>
+            }
         </ul>
     </nav>
     <div>

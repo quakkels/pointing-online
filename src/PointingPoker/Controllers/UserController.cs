@@ -4,6 +4,7 @@ using PointingPoker.DataAccess.Models;
 using PointingPoker.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace PointingPoker.Controllers
 {
@@ -12,6 +13,7 @@ namespace PointingPoker.Controllers
     {
         private readonly ISecurityService _securityService;
         private readonly IUserService _userService;
+        private Guid _currentUserId;
 
         public UserController(
             ISecurityService securityService,
@@ -19,6 +21,7 @@ namespace PointingPoker.Controllers
         {
             _securityService = securityService;
             _userService = userService;
+            _currentUserId = _securityService.GetCurrentUserId();
         }
 
         public ViewResult Index()
@@ -55,10 +58,10 @@ namespace PointingPoker.Controllers
             return View(model);
         }
         
-        public ViewResult Profile(string username)
+        public ViewResult Profile()
         {
             var user = new ProfileViewModel(
-                _userService.GetUserByUsername(username));
+                _userService.GetUserById(_currentUserId));
 
             return View(user);
         }

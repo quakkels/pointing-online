@@ -9,6 +9,7 @@ namespace PointingPoker.Domain
         IEnumerable<User> GetUsers();
         bool CreateUser(User user);
         User GetUserByUsername(string username);
+        User GetUserById(Guid id);
         bool UpdateUserInfo(Guid id, string username, string email);
         bool UpdatePassword(Guid id, string newPassword);
     }

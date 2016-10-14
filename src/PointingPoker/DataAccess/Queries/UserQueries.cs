@@ -80,6 +80,23 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
+        public User GetUserById(Guid id)
+        {
+            var query = @"
+                select top 1
+                    Id, Username, Email, PasswordHash 
+                from 
+                    Users
+                where 
+                    Id = @id";
+
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var user = conn.Query<User>(query, new { id });
+                return user.FirstOrDefault();
+            }
+        }
+
         public string GetPasswordHashByUserName(string userName)
         {
             var query = @"
