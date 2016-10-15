@@ -1,11 +1,9 @@
 ﻿CREATE TABLE [dbo].[Users]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [UserName] NVARCHAR(50) NOT NULL, 
-    [Email] VARCHAR(256) NOT NULL, 
+    [UserName] NVARCHAR(50) NOT NULL UNIQUE,
+    [Email] VARCHAR(256) NOT NULL UNIQUE, 
     [PasswordHash] VARCHAR(512) NULL
 )
 
 GO
-
-CREATE INDEX [IX_Users_Column] ON [dbo].[Users] (UserName)

@@ -21,7 +21,8 @@ namespace PointingPoker.Domain
             if (
                 card.Id == Guid.Empty
                 || card.CreatedBy == Guid.Empty
-                || string.IsNullOrEmpty(card.Description))
+                || string.IsNullOrEmpty(card.Description)
+                || card.TeamId == Guid.Empty)
             {
                 return false;
             }

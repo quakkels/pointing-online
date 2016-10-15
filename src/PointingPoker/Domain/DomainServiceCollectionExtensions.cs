@@ -10,6 +10,7 @@ namespace PointingPoker.Domain
             services.AddTransient<ICardService, CardService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<SignedInUserService>();
+            services.AddTransient<ITeamService, TeamService>();
         }
     }
 }

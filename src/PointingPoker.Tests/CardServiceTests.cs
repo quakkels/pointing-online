@@ -33,7 +33,8 @@ namespace PointingPoker.Tests
                 Id = Guid.NewGuid(),
                 CreatedBy = Guid.NewGuid(),
                 Description = "description",
-                IsPointingClosed = false
+                IsPointingClosed = false,
+                TeamId = Guid.NewGuid()
             };
         }
 
@@ -80,6 +81,20 @@ namespace PointingPoker.Tests
             // assert
             Assert.False(result);
             Assert.False(result2);
+        }
+
+        [Fact]
+        public void WillNotSaveCardWithMissingTeamId()
+        {
+            // arrange
+            Setup();
+            _card.TeamId = Guid.Empty;
+
+            // act
+            var result = _cardService.CreateCard(_card);
+
+            // assert
+            Assert.False(result);
         }
 
         [Fact]

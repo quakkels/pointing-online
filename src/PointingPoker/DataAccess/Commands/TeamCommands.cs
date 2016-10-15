@@ -3,22 +3,23 @@ using PointingPoker.DataAccess.Models;
 
 namespace PointingPoker.DataAccess.Commands
 {
-    public class CardCommands : ICardCommands
+    public class TeamCommands : ITeamCommands
     {
         private readonly IDbConnectionProvider _connectionProvider;
 
-        public CardCommands(IDbConnectionProvider connectionProvider)
+        public TeamCommands(IDbConnectionProvider connectionProvider)
         {
             _connectionProvider = connectionProvider;
         }
 
-        public void CreateCard(Card card)
+        public void CreateTeam(Team team)
         {
+            var command = @"
+            insert into Teams values (@id, @Name, @CreatedBy)";
+
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var command = 
-                    "insert into Cards values (@Id, @Description, @CreatedBy, @IsPointingClosed, @TeamId)";
-                conn.Execute(command, card);
+                conn.Execute(command, team);
             }
         }
     }
