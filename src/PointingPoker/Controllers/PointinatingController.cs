@@ -3,9 +3,11 @@ using PointingPoker.Domain;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PointingPoker.Controllers
 {
+    [Authorize]
     public class PointinatingController : Controller
     {
         private readonly ICardService _cardService;

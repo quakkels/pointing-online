@@ -1,10 +1,6 @@
 ﻿@using PointingPoker.Domain
 @using PointingPoker.Domain.Models
-@inject SignedInUserService SignedInUserServ 
-@{ 
-    var isSignedIn = SignedInUserServ.IsSignedIn();
-    var user = SignedInUserServ.GetSignedInUser();
-}
+@inject SignedInUserService SignedInUserServ
 <!DOCTYPE html>
 
 <html>
@@ -14,20 +10,26 @@
     <link rel="stylesheet" href="~/styles/main.css" />
 </head>
 <body>
-    <header></header>
-    <nav>
-        <ul>
-            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-            <li><a href="@Url.Action("Register", "User")">Register</a></li>
-            <li><a href="@Url.Action("SignIn", "User")">Sign In</a></li>
-            <li><a href="@Url.Action("Index", "User")">List Users</a></li>
-            @if (isSignedIn)
-            {
-                <li>Welcome @user.UserName</li>
-            }
-        </ul>
+    <nav class="horizontal right">
+        <div class="content">
+            @Html.Partial("_UserNav")
+        </div>
     </nav>
-    <div>
+    <header>
+        <div class="content">
+            <h1>pointing.online</h1>
+            <span>Asynchronous story pointing for distributed software teams.</span>
+        </div>
+    </header>
+    <nav class="horizontal">
+        <div class="content">
+            @if (SignedInUserServ.IsSignedIn())
+            {
+                @Html.Partial("_SignedInNav")
+            }
+        </div>
+    </nav>
+    <div class="content">
         @RenderBody()
     </div>
 </body>

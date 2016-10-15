@@ -124,9 +124,8 @@ namespace PointingPoker.Controllers
 
             var user = _userService.GetUserByUsername(model.UserName);
             await _securityService.SignIn(user.Id);
-
-            // todo: get user id from claim rather than passing through the url
-            return RedirectToAction(nameof(Profile), new { username = model.UserName });
+            
+            return Redirect("/");
         }
 
         [AllowAnonymous]
