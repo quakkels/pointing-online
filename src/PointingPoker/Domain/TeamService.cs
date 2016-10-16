@@ -1,6 +1,8 @@
 ﻿using System;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Commands;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PointingPoker.Domain
 {
@@ -13,7 +15,7 @@ namespace PointingPoker.Domain
             _teamCommands = teamCommands;
         }
 
-        public bool CreateTeam(Team team)
+        public bool CreateTeam(Team team, IEnumerable<string> memberEmails)
         {
             if (team.Id == Guid.Empty
                 || string.IsNullOrEmpty(team.Name)
@@ -22,7 +24,17 @@ namespace PointingPoker.Domain
                 return false;
             }
 
-            _teamCommands.CreateTeam(team);
+            memberEmails = memberEmails?.Distinct();
+
+            if (memberEmails == null)
+            {
+                memberEmails = new List<string>();
+            }
+
+            _teamCommands.CreateTeam(
+                team, 
+                memberEmails);
+
             return true;
         }
     }

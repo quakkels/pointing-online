@@ -8,7 +8,6 @@ namespace PointingPoker.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public string MemberEmails { get; set; }
     }
 }

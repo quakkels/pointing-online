@@ -35,12 +35,14 @@ namespace PointingPoker.Controllers
                 return View(model);
             }
 
-            _teamService.CreateTeam(new Team
-            {
-                Id = Guid.NewGuid(),
-                Name = model.Name,
-                CreatedBy = _currentUserId
-            });
+            _teamService.CreateTeam(
+                new Team
+                {
+                    Id = Guid.NewGuid(),
+                    Name = model.Name,
+                    CreatedBy = _currentUserId
+                },
+                model.MemberEmails?.Split(' '));
 
             return RedirectToAction("Index", "Pointinating");
         }

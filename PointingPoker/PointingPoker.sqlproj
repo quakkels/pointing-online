@@ -63,6 +63,7 @@
     <Build Include="Cards.sql" />
     <Build Include="Points.sql" />
     <Build Include="Teams.sql" />
+    <Build Include="TeamMembers.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PointingPoker.refactorlog" />
