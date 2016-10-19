@@ -167,12 +167,33 @@ ul.grid li div {
 }
 
 /*
-    buttons
+    forms and buttons
 */
-.button {
+label {
+    display: block;
+}
+
+input, textarea {
+    display:block;
+    width: 100%;
+    padding:8px;
+    border-radius: 4px;
+    border:1px solid gray;
+}
+
+.input-validation-error {
+    border: 1px solid #b73737;
+}
+
+.field-validation-error {
+    color: #b73737;
+}
+
+button, .button {
     display:inline-block;
     color: #fff;
     background: chocolate;
     padding: 6px 10px;
     border-radius:8px;
+    border: none;
 }
