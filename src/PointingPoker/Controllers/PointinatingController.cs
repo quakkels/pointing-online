@@ -29,18 +29,6 @@ namespace PointingPoker.Controllers
         {
             var model = new DashboardViewModel
             {
-                NeedsPoints = new List<Card>
-                {
-                    new Card{Description = "User can view the cards that need points from the user."},
-                    new Card{Description = "User can view the cards that are in proceess of being pointed, but this user has already pointed."},
-                    new Card{Description = "As a pointer, I can make cards."},
-                },
-                Cards = new List<Card>
-                {
-                    new Card{Description = "User can view the cards that need points from the user."},
-                    new Card{Description = "User can view the cards that are in proceess of being pointed, but this user has already pointed."},
-                    new Card{Description = "As a pointer, I can make cards."},
-                },
                 Teams = _teamService.GetTeamsByUser(_currentUserId)
             };
 

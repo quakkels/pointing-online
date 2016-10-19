@@ -148,6 +148,24 @@ ul.alternating li:nth-child(odd) {
     background-color:#eee;
 }
 
+ul.grid:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+ul.grid li {
+    display:table-cell;
+    width: 250px;
+    height: 250px;
+}
+
+ul.grid li div {
+    padding: 16px;
+    margin:16px;
+    background: #eee;
+}
+
 /*
     buttons
 */
