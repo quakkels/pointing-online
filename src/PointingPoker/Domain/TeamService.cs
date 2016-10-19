@@ -3,16 +3,19 @@ using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Commands;
 using System.Collections.Generic;
 using System.Linq;
+using PointingPoker.DataAccess.Queries;
 
 namespace PointingPoker.Domain
 {
     public class TeamService : ITeamService
     {
         private ITeamCommands _teamCommands;
+        private ITeamQueries _teamQueries;
 
-        public TeamService(ITeamCommands teamCommands)
+        public TeamService(ITeamCommands teamCommands, ITeamQueries teamQueries)
         {
             _teamCommands = teamCommands;
+            _teamQueries = teamQueries;
         }
 
         public bool CreateTeam(Team team, IEnumerable<string> memberEmails)
@@ -36,6 +39,17 @@ namespace PointingPoker.Domain
                 memberEmails);
 
             return true;
+        }
+
+        public IEnumerable<Team> GetTeamsByUser(Guid memberUserId)
+        {
+            var teams = _teamQueries.GetTeamsByUser(memberUserId);
+            return teams;
+        }
+
+        public Team GetTeam(Guid teamId)
+        {
+            return _teamQueries.GetTeam(teamId);
         }
     }
 }

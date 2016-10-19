@@ -1,27 +1,160 @@
 ﻿body {
+    margin:0;
+    padding-bottom: 24px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: white;
     color: gray;
 }
 
-header h1 {
-    font-size:48px;
+/*
+    typography
+*/
+
+header {
+    padding: 0 0 24px 0;
 }
 
-nav.right {
-    text-align:right;
-}
-nav.horizontal ul {
+header h1 {
+    font-size:48px;
     margin: 0;
     padding: 0;
 }
 
-nav.horizontal ul li { 
-    display: inline-block; 
-
+a {
+    text-decoration:none;
+    color:chocolate;
 }
 
+h1, h2, h3 {
+    margin:0;
+    padding:24px 0 0 0;
+    color: chocolate;
+}
+
+.headline {
+    padding:24px 0 0 0;
+}
+.headline h1, .headline h2, .headline h3 {
+    padding: 0;
+}
+
+.right {
+    text-align:right;
+}
+
+/*
+    navigations
+*/
+nav {
+    content: "";
+    display: table;
+    clear: both;
+    width:100%;
+}
+
+nav.main {
+    background: #aaa;
+}
+
+nav.horizontal ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height:48px;
+}
+
+nav.horizontal ul li { 
+    float:right;
+}
+
+nav.main ul li {
+    float:left;
+}
+
+nav.horizontal ul li a { 
+    display:block;
+    display: table-cell;
+    height: 48px;
+    padding: 0 16px;
+}
+
+nav.main ul li a {
+    color: #ffffff;
+    text-shadow:2px 2px 5px #000;
+}
+
+nav.main ul li a:hover {
+    background: #999;
+}
+
+
+/*
+    layout
+*/
 .content {
     margin: 0 auto;
-    width: 600px;
+    width: 920px;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.column-padding-right {
+    padding-right: 16px;
+}
+
+.column-padding-left {
+    padding-left: 16px;
+}
+
+.column1-3 {
+    width:33.3333%;
+    float:left;
+}
+
+.column2-3 {
+    width:66.6666%;
+    float:left;
+}
+
+.content-padding-3 {
+    padding: 3px;
+}
+
+.content-padding-8 {
+    padding: 8px;
+}
+
+/*
+    lists
+*/
+ul.solid,
+ul.alternating {
+    list-style:none;
+    padding:0;
+    margin:0;
+    border:solid 1px #ccc;
+}
+
+ul.alternating li,
+ul.solid li {
+    padding:4px;
+}
+
+ul.alternating li:nth-child(odd) {
+    background-color:#eee;
+}
+
+/*
+    buttons
+*/
+.button {
+    display:inline-block;
+    color: #fff;
+    background: chocolate;
+    padding: 6px 10px;
+    border-radius:8px;
 }

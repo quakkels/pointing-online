@@ -1,0 +1,43 @@
+﻿@model PointingPoker.Models.TeamSummaryViewModel
+<h1>@Model.Team.Name</h1>
+<div class="group">
+    <section class="column2-3">
+        <div class="column-padding-right">
+            <div class="headline group">
+                <h3 style="float:left;">Cards</h3>
+                <a style="float:right;" href="@Url.Action("Card", "Pointinating", new { Model.Team.Id })">Create Card</a>
+            </div>
+            <ul class="alternating">
+                @foreach (var card in Model.CardsToPoint)
+                {
+                <li><a href="@Url.Action("Point", "Pointinating", new { id = card.Id })">@card.Description</a></li>
+                }
+            </ul>
+            <h3>Pointed Cards</h3>
+            <ul class="alternating">
+                @foreach (var card in Model.PointedCards)
+                {
+                    <li><a href="@Url.Action("Card", "Pointinating", new { id = card.Id })">@card.Description</a></li>
+                }
+            </ul>
+        </div>
+    </section>
+    <section class="column1-3">
+        <div class="column-padding-left">
+            <h3>Team Members</h3>
+            <ul>
+                @foreach (var user in Model.TeamUserNames)
+                {
+                    <li>@user</li>
+                }
+            </ul>
+            <h3>Your Other Teams</h3>
+            <ul class="alternating">
+                @foreach (var team in Model.Teams)
+                {
+                    <li><a href="@Url.Action("Summary", "Team", new { id = team.Id })">@team.Name</a></li>
+                }
+            </ul>
+        </div>
+    </section>
+</div>

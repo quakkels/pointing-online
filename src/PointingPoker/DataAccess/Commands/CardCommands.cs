@@ -17,7 +17,9 @@ namespace PointingPoker.DataAccess.Commands
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var command = 
-                    "insert into Cards values (@Id, @Description, @CreatedBy, @IsPointingClosed, @TeamId)";
+                    @"insert into Cards 
+                    (Id, Description, CreatedBy, IsPointingClosed, TeamId)
+                    values (@Id, @Description, @CreatedBy, @IsPointingClosed, @TeamId)";
                 conn.Execute(command, card);
             }
         }

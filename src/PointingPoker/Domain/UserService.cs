@@ -72,5 +72,10 @@ namespace PointingPoker.Domain
             _userCommands.UpdatePassword(id, newPassword);
             return true;
         }
+
+        public IEnumerable<string> GetUserNamesByTeam(Guid teamId)
+        {
+            return _userQueries.GetUserNamesByTeam(teamId);
+        }
     }
 }

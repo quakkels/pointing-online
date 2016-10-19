@@ -12,5 +12,6 @@ namespace PointingPoker.DataAccess.Queries
         User GetUserByUserName(string userName);
         User GetUserById(Guid id);
         string GetPasswordHashByUserName(string userName);
+        IEnumerable<string> GetUserNamesByTeam(Guid teamId);
     }
 }

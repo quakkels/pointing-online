@@ -112,5 +112,19 @@ namespace PointingPoker.DataAccess.Queries
                 return passwordHash.FirstOrDefault();
             }
         }
+        public IEnumerable<string> GetUserNamesByTeam(Guid teamId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var userNames = conn.Query<string>(
+                    @"select u.userName 
+                    from Users u
+                    inner join TeamMembers tm on tm.UserId = u.Id
+                    where tm.TeamId = @teamId",
+                    new { teamId });
+
+                return userNames;
+            }
+        }
     }
 }

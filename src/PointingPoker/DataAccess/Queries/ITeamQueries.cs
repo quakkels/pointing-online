@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace PointingPoker.Domain
+namespace PointingPoker.DataAccess.Queries
 {
-    public interface ITeamService
+    public interface ITeamQueries
     {
-        bool CreateTeam(Team team, IEnumerable<string> memberEmails);
         IEnumerable<Team> GetTeamsByUser(Guid memberUserId);
         Team GetTeam(Guid teamId);
     }

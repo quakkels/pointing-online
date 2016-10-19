@@ -1,0 +1,45 @@
+﻿@model PointingPoker.Models.DashboardViewModel
+<div class="group">
+<section class="column2-3">
+    <div class="column-padding-right">
+        <h3>Not Pointed</h3>
+        <ul class="alternating">
+            @foreach (var card in Model.NeedsPoints)
+            {
+                <li>
+                    <a href="@Url.Action("Point", new { id = card.Id })">@card.Description</a>
+                </li>
+            }
+        </ul>
+
+        <h3>Team is Still Pointing</h3>
+        <ul class="alternating">
+            @foreach (var card in Model.Cards)
+            {
+                <li>
+                    <a href="@Url.Action("Point", new { id = card.Id })">@card.Description</a>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
+
+<section class="column1-3">
+    <div class="column-padding-left">
+        <h3>Your Teams</h3>
+        <ul class="alternating">
+            @foreach (var team in Model.Teams)
+            {
+                <li>
+                    <a href="@Url.Action("Summary", "Team", new { id = team.Id })">@team.Name</a>
+                </li>
+            }
+            <li>
+                <div class="content-padding-3 right">
+                    <a class="button" href="@Url.Action("Create", "Team")">Create Team</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+</div>

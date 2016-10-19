@@ -1,6 +1,7 @@
 ﻿using Moq;
 using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
+using PointingPoker.DataAccess.Queries;
 using PointingPoker.Domain;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace PointingPoker.Tests
     public class TeamServiceTests
     {
         private Mock<ITeamCommands> _teamCommands;
+        private Mock<ITeamQueries> _teamQueries;
         private Team _team;
         private IEnumerable<string> _memberEmails;
         private TeamService _service;
@@ -26,7 +28,9 @@ namespace PointingPoker.Tests
 
             _teamCommands = new Mock<ITeamCommands>();
 
-            _service = new TeamService(_teamCommands.Object);
+            _teamQueries = new Mock<ITeamQueries>();
+
+            _service = new TeamService(_teamCommands.Object, _teamQueries.Object);
         }
 
         [Fact]

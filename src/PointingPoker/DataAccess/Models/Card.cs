@@ -9,5 +9,6 @@ namespace PointingPoker.DataAccess.Models
         public Guid CreatedBy { get; set; }
         public bool IsPointingClosed { get; set; }
         public Guid TeamId { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

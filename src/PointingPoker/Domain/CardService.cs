@@ -2,6 +2,7 @@
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
 using System;
+using System.Collections.Generic;
 
 namespace PointingPoker.Domain
 {
@@ -34,6 +35,16 @@ namespace PointingPoker.Domain
 
             _cardCommands.CreateCard(card);
             return true;
+        }
+
+        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId)
+        {
+            return _cardQueries.GetCardsToPointForTeam(userId, teamId);
+        }
+
+        public IEnumerable<Card> GetOpenCardsForTeam(Guid teamId)
+        {
+            return _cardQueries.GetOpenCardsForTeam(teamId);
         }
     }
 }
