@@ -52,10 +52,6 @@ nav {
     width:100%;
 }
 
-nav.main {
-    background: #aaa;
-}
-
 nav.horizontal ul {
     margin: 0;
     padding: 0;
@@ -65,6 +61,12 @@ nav.horizontal ul {
 
 nav.horizontal ul li { 
     float:right;
+}
+
+nav.main ul {
+    background: #ddd;
+    border: 1px solid #ccc;
+    border-radius:8px;
 }
 
 nav.main ul li {
@@ -78,13 +80,17 @@ nav.horizontal ul li a {
     padding: 0 16px;
 }
 
+nav.main ul li:first-child a {
+    border-radius:8px 0 0 8px;
+}
+
 nav.main ul li a {
-    color: #ffffff;
-    text-shadow:2px 2px 5px #000;
+    color: #000;
+    text-shadow:2px 2px 5px #fff;
 }
 
 nav.main ul li a:hover {
-    background: #999;
+    background: #ccc;
 }
 
 
@@ -179,6 +185,7 @@ input, textarea {
     padding:8px;
     border-radius: 4px;
     border:1px solid gray;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .input-validation-error {
