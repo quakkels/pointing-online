@@ -18,6 +18,7 @@ namespace PointingPoker.DataAccess
             services.AddTransient<IUserCommands, UserCommands>();
             services.AddTransient<ITeamCommands, TeamCommands>();
             services.AddTransient<ITeamQueries, TeamQueries>();
+            services.AddTransient<IPointCommands, PointCommands>();
         }
     }
 }

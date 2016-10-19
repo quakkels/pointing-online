@@ -4,7 +4,6 @@ using PointingPoker.DataAccess.Models;
 using PointingPoker.Models;
 using System;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 
 namespace PointingPoker.Controllers
 {
@@ -73,6 +72,7 @@ namespace PointingPoker.Controllers
 
         public ViewResult Point(Guid id)
         {
+            var card = _cardService.GetCard(id);
             return View();
         }
     }

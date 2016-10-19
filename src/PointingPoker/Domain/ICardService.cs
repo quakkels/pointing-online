@@ -9,5 +9,6 @@ namespace PointingPoker.Domain
         bool CreateCard(Card card);
         IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId);
         IEnumerable<Card> GetOpenCardsForTeam(Guid teamId);
+        Card GetCard(Guid cardId);
     }
 }

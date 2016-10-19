@@ -46,5 +46,10 @@ namespace PointingPoker.Domain
         {
             return _cardQueries.GetOpenCardsForTeam(teamId);
         }
+
+        public Card GetCard(Guid cardId)
+        {
+            return _cardQueries.GetCard(cardId);
+        }
     }
 }

@@ -74,5 +74,19 @@ namespace PointingPoker.DataAccess.Queries
                 return cards;
             }
         }
+
+        public Card GetCard(Guid cardId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var cards = conn.Query<Card>(
+                    @"select top 1 [Id], [Description] [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    from Cards
+                    where [Id] = @cardId",
+                    new { cardId });
+
+                return cards.FirstOrDefault();
+            }
+        }
     }
 }
