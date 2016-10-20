@@ -8,6 +8,10 @@
                 <a style="float:right;" href="@Url.Action("Card", "Pointinating", new { Model.Team.Id })">Create Card</a>
             </div>
             <ul class="alternating">
+                @if (!Model.CardsToPoint.Any())
+                {
+                <li>No cards to point.</li>
+                }
                 @foreach (var card in Model.CardsToPoint)
                 {
                 <li><a href="@Url.Action("Point", "Pointinating", new { id = card.Id })">@card.Description</a></li>
@@ -15,9 +19,13 @@
             </ul>
             <h3>Pointed Cards</h3>
             <ul class="alternating">
+                @if (!Model.PointedCards.Any())
+                {
+                    <li>No pointed cards.</li>
+                }
                 @foreach (var card in Model.PointedCards)
                 {
-                    <li><a href="@Url.Action("Card", "Pointinating", new { id = card.Id })">@card.Description</a></li>
+                    <li><a href="@Url.Action("Point", "Pointinating", new { id = card.Id })">@card.Description</a></li>
                 }
             </ul>
         </div>

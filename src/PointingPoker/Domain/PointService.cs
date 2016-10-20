@@ -9,12 +9,15 @@ namespace PointingPoker.Domain
     {
         private readonly IPointCommands _pointCommands;
         private readonly ICardQueries _cardQueries;
+        private readonly IPointQueries _pointQueries;
 
         public PointService(
             IPointCommands pointCommands,
+            IPointQueries pointQueries,
             ICardQueries cardQueries)
         {
             _pointCommands = pointCommands;
+            _pointQueries = pointQueries;
             _cardQueries = cardQueries;
         }
 
@@ -37,6 +40,11 @@ namespace PointingPoker.Domain
 
             _pointCommands.CreatePoint(point);
             return true;
+        }
+
+        public int GetCardPoint(Guid cardId, Guid userId)
+        {
+            return _pointQueries.GetCardPoints(cardId, userId);
         }
     }
 }

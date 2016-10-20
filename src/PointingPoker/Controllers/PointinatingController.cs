@@ -77,7 +77,8 @@ namespace PointingPoker.Controllers
         {
             var model = new PointViewModel
             {
-                Card = _cardService.GetCard(id)
+                Card = _cardService.GetCard(id),
+                PointValue = _pointService.GetCardPoint(id, _currentUserId)
             };
 
             return View(model);
