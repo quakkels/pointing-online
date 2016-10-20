@@ -1,0 +1,20 @@
+﻿@using PointingPoker.Domain
+@using PointingPoker.Domain.Models
+@inject SignedInUserService SignedInUserServ
+@{
+    var isSignedIn = SignedInUserServ.IsSignedIn();
+    var user = SignedInUserServ.GetSignedInUser();
+}
+<ul>
+    @if (isSignedIn)
+    {
+    <li>Welcome @user.UserName</li>
+    <li><a href="@Url.Action("Profile", "User")">Profile</a></li>
+    <li><a href="@Url.Action("SignOut", "User")">Sign Out</a></li>
+    }
+    else
+    {
+    <li><a href="@Url.Action("SignIn", "User")">Sign In</a></li>
+    <li><a href="@Url.Action("Register", "User")">Register</a></li>
+    }
+</ul>

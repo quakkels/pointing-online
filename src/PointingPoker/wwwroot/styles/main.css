@@ -1,0 +1,216 @@
+﻿body {
+    margin:0;
+    padding-bottom: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: white;
+    color: gray;
+}
+
+/*
+    typography
+*/
+
+header {
+    padding: 0 0 24px 0;
+}
+
+header h1 {
+    font-size:48px;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration:none;
+    color:chocolate;
+}
+
+h1, h2, h3 {
+    margin:0;
+    padding:24px 0 0 0;
+    color: chocolate;
+}
+
+.headline {
+    padding:24px 0 0 0;
+}
+.headline h1, .headline h2, .headline h3 {
+    padding: 0;
+}
+
+.right {
+    text-align:right;
+}
+
+p {
+    margin: 20px 0;
+}
+
+/*
+    navigations
+*/
+nav {
+    content: "";
+    display: table;
+    clear: both;
+    width:100%;
+}
+
+nav.horizontal ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height:48px;
+}
+
+nav.horizontal ul li { 
+    float:right;
+}
+
+nav.main ul {
+    background: #ddd;
+    border: 1px solid #ccc;
+    border-radius:8px;
+}
+
+nav.main ul li {
+    float:left;
+}
+
+nav.horizontal ul li a { 
+    display:block;
+    display: table-cell;
+    height: 48px;
+    padding: 0 16px;
+}
+
+nav.main ul li:first-child a {
+    border-radius:8px 0 0 8px;
+}
+
+nav.main ul li a {
+    color: #000;
+    text-shadow:2px 2px 5px #fff;
+}
+
+nav.main ul li a:hover {
+    background: #ccc;
+}
+
+
+/*
+    layout
+*/
+.content {
+    margin: 0 auto;
+    width: 920px;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.column-padding-right {
+    padding-right: 16px;
+}
+
+.column-padding-left {
+    padding-left: 16px;
+}
+
+.column1-3 {
+    width:33.3333%;
+    float:left;
+}
+
+.column2-3 {
+    width:66.6666%;
+    float:left;
+}
+
+.content-padding-3 {
+    padding: 3px;
+}
+
+.content-padding-8 {
+    padding: 8px;
+}
+
+/*
+    lists
+*/
+ul.solid,
+ul.alternating {
+    list-style:none;
+    padding:0;
+    margin:0;
+    border:solid 1px #ccc;
+}
+
+ul.alternating li,
+ul.solid li {
+    padding:4px;
+}
+
+ul.alternating li:nth-child(odd) {
+    background-color:#eee;
+}
+
+ul.grid:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+ul.grid li {
+    display:table-cell;
+    width: 250px;
+    height: 250px;
+}
+
+ul.grid li div {
+    padding: 16px;
+    margin:16px;
+    background: #eee;
+}
+
+/*
+    forms and buttons
+*/
+label {
+    display: block;
+}
+
+input, textarea {
+    display:block;
+    width: 100%;
+    padding:8px;
+    border-radius: 4px;
+    border:1px solid gray;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+label input {
+    display: inline;
+    width: initial;
+}
+
+.input-validation-error {
+    border: 1px solid #b73737;
+}
+
+.field-validation-error {
+    color: #b73737;
+}
+
+button, .button {
+    display:inline-block;
+    color: #fff;
+    background: chocolate;
+    padding: 6px 10px;
+    border-radius:8px;
+    border: none;
+    cursor: pointer;
+}

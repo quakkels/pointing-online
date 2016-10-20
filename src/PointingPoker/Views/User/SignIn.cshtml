@@ -1,0 +1,17 @@
+﻿@model PointingPoker.Models.SignInViewModel
+<h1>Sign In to Get Pointing</h1>
+<form method="post">
+    <p>
+        @Html.LabelFor(x => x.UserName)
+        @Html.TextBoxFor(x => x.UserName)
+        @Html.ValidationMessageFor(x => x.UserName)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password)
+        @Html.ValidationMessageFor(x => x.Password)
+    </p>
+    <p>
+        <button type="submit">Sign In</button> <a href="@Url.Action("Register", "User")">Register</a>
+    </p>
+</form>

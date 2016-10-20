@@ -1,0 +1,19 @@
+﻿@model PointingPoker.Models.CreateTeamViewModel
+
+<h1>Team</h1>
+<form method="post">
+    <p>
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name)
+        @Html.ValidationMessageFor(x => x.Name)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.MemberEmails, "Member Emails")
+        @Html.TextBoxFor(x => x.MemberEmails)
+        @Html.ValidationMessageFor(x => x.MemberEmails)
+        (Separate emails with spaces.)
+    </p>
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>

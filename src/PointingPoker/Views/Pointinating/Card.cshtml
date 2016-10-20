@@ -1,0 +1,14 @@
+﻿@model PointingPoker.Models.CardViewModel
+<h1>Card</h1>
+<form method="post">
+    @Html.HiddenFor(x => x.CreatedBy)
+    @Html.HiddenFor(x => x.TeamId)
+    <p>
+        @Html.LabelFor(x => x.Description)
+        @Html.TextAreaFor(x => x.Description)
+        @Html.ValidationMessageFor(x => x.Description)
+    </p>
+    <p>
+        <button type="submit">Save</button>
+    </p>
+</form>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="e366bd4b-52cb-4541-b9bf-9b70d8111d65" ChangeDateTime="10/08/2016 15:07:58">
+    <Property Name="ElementName" Value="[dbo].[Users].[username]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Username" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="262f2a96-2496-4f94-bdc8-c54ca3ea94dd" ChangeDateTime="10/09/2016 20:54:18">
+    <Property Name="ElementName" Value="[dbo].[Cards].[OpenForPointing]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Cards]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsPointingClosed" />
+  </Operation>
+</Operations>
