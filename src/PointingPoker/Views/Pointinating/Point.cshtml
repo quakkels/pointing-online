@@ -1,0 +1,20 @@
+﻿@model PointingPoker.Models.PointViewModel
+<h1>Point: @Model.Card.Description</h1>
+<form method="post">
+    @Html.HiddenFor(x => x.Card.Id)
+    <div class="grid">
+        <label>@Html.RadioButtonFor(x => x.PointValue, "1") 1</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "2") 2</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "3") 3</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "5") 5</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "8") 8</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "13") 13</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "21") 21</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "34") 34</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "55") 55</label>
+        <label>@Html.RadioButtonFor(x => x.PointValue, "89") 89</label>
+    </div>
+    <p>
+        <button type="submit">Point</button>
+    </p>
+</form>
