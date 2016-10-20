@@ -103,7 +103,10 @@ nav.main ul li a:hover {
 */
 .content {
     margin: 0 auto;
-    width: 920px;
+    max-width: 920px;
+}
+.content, .column1-3, .column2-3 {
+    min-width: 320px;
 }
 
 .group:after {
