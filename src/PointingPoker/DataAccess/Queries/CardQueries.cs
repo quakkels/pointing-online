@@ -79,13 +79,13 @@ namespace PointingPoker.DataAccess.Queries
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var cards = conn.Query<Card>(
-                    @"select top 1 [Id], [Description] [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                var card = conn.QueryFirstOrDefault<Card>(
+                    @"select top 1 [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
                     from Cards
                     where [Id] = @cardId",
                     new { cardId });
 
-                return cards.FirstOrDefault();
+                return card;
             }
         }
 
