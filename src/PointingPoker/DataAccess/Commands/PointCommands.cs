@@ -17,7 +17,7 @@ namespace PointingPoker.DataAccess.Commands
             using(var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 conn.Execute(
-                    @"insert into Points (Id, PointedBy, CardId, Points) set (@Id, @PointedBy, @CardId, @Points)",
+                    @"insert into Points (Id, PointedBy, CardId, Points) values (@Id, @PointedBy, @CardId, @Points)",
                     point);
             }
         }

@@ -42,6 +42,10 @@ h1, h2, h3 {
     text-align:right;
 }
 
+p {
+    margin: 20px 0;
+}
+
 /*
     navigations
 */
@@ -188,6 +192,11 @@ input, textarea {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+label input {
+    display: inline;
+    width: initial;
+}
+
 .input-validation-error {
     border: 1px solid #b73737;
 }
@@ -203,4 +212,5 @@ button, .button {
     padding: 6px 10px;
     border-radius:8px;
     border: none;
+    cursor: pointer;
 }
