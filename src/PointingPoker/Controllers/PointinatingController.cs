@@ -83,6 +83,7 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public ActionResult Point(PointViewModel model)
         {
             model.Card = _cardService.GetCard(model.Card.Id);
