@@ -1,6 +1,7 @@
 ﻿using Moq;
 using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
+using PointingPoker.DataAccess.Queries;
 using PointingPoker.Domain;
 using System;
 using Xunit;
@@ -10,6 +11,7 @@ namespace PointingPoker.Tests
     public class PointServiceTests
     {
         private Mock<IPointCommands> _pointCommandsMock;
+        private Mock<ICardQueries> _cardQueriesMock;
 
         private Point _point;
 
@@ -17,9 +19,12 @@ namespace PointingPoker.Tests
 
         private void SetUp()
         {
+            _cardQueriesMock = new Mock<ICardQueries>();
             _pointCommandsMock = new Mock<IPointCommands>();
             
-            service = new PointService(_pointCommandsMock.Object);
+            service = new PointService(
+                _pointCommandsMock.Object,
+                _cardQueriesMock.Object);
 
             _point = new Point
             {
@@ -73,7 +78,30 @@ namespace PointingPoker.Tests
 
             // assert
             Assert.False(result);
-            _pointCommandsMock.Verify(x => x.CreatePoint(It.IsAny<Point>()), Times.Never);
+            _pointCommandsMock
+                .Verify(
+                    x => x.CreatePoint(It.IsAny<Point>()), 
+                    Times.Never);
+        }
+
+        [Fact]
+        public void CannotCreatePointWhenCardPointingIsClosed()
+        {
+            // arrange
+            SetUp();
+            _cardQueriesMock
+                .Setup(x => x.IsCardClosedForPointing(It.IsAny<Guid>()))
+                .Returns(true);
+
+            // act
+            var result = service.PointCard(_point);
+
+            // assert
+            Assert.False(result);
+            _pointCommandsMock
+                .Verify(
+                    x => x.CreatePoint(It.IsAny<Point>()),
+                    Times.Never);
         }
 
         [Fact]

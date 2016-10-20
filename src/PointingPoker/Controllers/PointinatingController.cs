@@ -13,15 +13,18 @@ namespace PointingPoker.Controllers
         private Guid _currentUserId;
         private readonly ICardService _cardService;
         private readonly ITeamService _teamService;
+        private readonly IPointService _pointService;
 
         public PointinatingController(
             ICardService cardService, 
             ITeamService teamService,
-            ISecurityService securityService)
+            ISecurityService securityService,
+            IPointService pointService)
         {
             _cardService = cardService;
             _teamService = teamService;
             _currentUserId = securityService.GetCurrentUserId();
+            _pointService = pointService;
         }
 
         public ViewResult Dashboard()
@@ -72,8 +75,38 @@ namespace PointingPoker.Controllers
 
         public ViewResult Point(Guid id)
         {
-            var card = _cardService.GetCard(id);
-            return View();
+            var model = new PointViewModel
+            {
+                Card = _cardService.GetCard(id)
+            };
+
+            return View(model);
+        }
+
+        public ActionResult Point(PointViewModel model)
+        {
+            model.Card = _cardService.GetCard(model.Card.Id);
+
+            if (ModelState.IsValid)
+            {
+                View(model);
+            }
+
+            var point = new Point
+            {
+                Id = Guid.NewGuid(),
+                PointedBy = _currentUserId,
+                CardId = model.Card.Id,
+                Points = model.PointValue
+            };
+            var success = _pointService.PointCard(point);
+
+            if (!success)
+            {
+                return Redirect("/");
+            }
+
+            return RedirectToAction("Summary", "Team", new { id = model.Card.TeamId });
         }
     }
 }

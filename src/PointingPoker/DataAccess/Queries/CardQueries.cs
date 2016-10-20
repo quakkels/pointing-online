@@ -88,5 +88,19 @@ namespace PointingPoker.DataAccess.Queries
                 return cards.FirstOrDefault();
             }
         }
+
+        public bool IsCardClosedForPointing(Guid cardId)
+        {
+            using ( var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var result = conn.QueryFirstOrDefault<bool>(
+                    @"select top 1 [IsPointingClosed]
+                    from Cards
+                    where Id = @cardId",
+                    new { cardId });
+
+                return result;
+            }
+        }
     }
 }

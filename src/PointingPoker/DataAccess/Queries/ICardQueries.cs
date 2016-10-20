@@ -11,5 +11,6 @@ namespace PointingPoker.DataAccess.Queries
         IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId);
         IEnumerable<Card> GetOpenCardsForTeam(Guid teamId);
         Card GetCard(Guid cardId);
+        bool IsCardClosedForPointing(Guid cardId);
     }
 }
