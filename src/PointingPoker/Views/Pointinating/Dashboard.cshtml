@@ -3,9 +3,7 @@
     @foreach (var team in Model.Teams)
     {
         <li>
-            <div>
-                <a href="@Url.Action("Summary", "Team", new { id = team.Id })">@team.Name</a>
-            </div>
+            <a class="callout center" href="@Url.Action("Summary", "Team", new { id = team.Id })">@team.Name</a>
         </li>
     }
 </ul>
