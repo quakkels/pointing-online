@@ -269,7 +269,6 @@ input, textarea {
 
 label input {
     display: inline;
-    width: initial;
 }
 
 .input-validation-error {

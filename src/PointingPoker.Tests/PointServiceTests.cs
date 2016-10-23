@@ -11,6 +11,7 @@ namespace PointingPoker.Tests
     public class PointServiceTests
     {
         private Mock<IPointCommands> _pointCommandsMock;
+        private Mock<IPointQueries> _pointQueriesMock;
         private Mock<ICardQueries> _cardQueriesMock;
 
         private Point _point;
@@ -21,9 +22,11 @@ namespace PointingPoker.Tests
         {
             _cardQueriesMock = new Mock<ICardQueries>();
             _pointCommandsMock = new Mock<IPointCommands>();
+            _pointQueriesMock = new Mock<IPointQueries>();
             
             service = new PointService(
                 _pointCommandsMock.Object,
+                _pointQueriesMock.Object,
                 _cardQueriesMock.Object);
 
             _point = new Point
