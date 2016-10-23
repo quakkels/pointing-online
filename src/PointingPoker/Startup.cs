@@ -57,6 +57,7 @@ namespace PointingPoker
             });
 
             app.UseStaticFiles();
+            app.UseStatusCodePages();
 
             app.UseMvc(routes =>
             {
