@@ -14,6 +14,6 @@ namespace PointingPoker.Models
         public bool IsPointingClosed { get; set; }
 
         [Required]
-        public Guid TeamId { get; set; }
+        public int TeamId { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace PointingPoker.Tests
                 CreatedBy = Guid.NewGuid(),
                 Description = "description",
                 IsPointingClosed = false,
-                TeamId = Guid.NewGuid()
+                TeamId = 1
             };
         }
 
@@ -74,7 +74,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             Setup();
-            _card.TeamId = Guid.Empty;
+            _card.TeamId = 0;
 
             // act
             var result = _cardService.CreateCard(_card);

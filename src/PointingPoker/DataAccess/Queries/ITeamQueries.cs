@@ -7,6 +7,6 @@ namespace PointingPoker.DataAccess.Queries
     public interface ITeamQueries
     {
         IEnumerable<Team> GetTeamsByUser(Guid memberUserId);
-        Team GetTeam(Guid teamId);
+        Team GetTeam(int teamId);
     }
 }

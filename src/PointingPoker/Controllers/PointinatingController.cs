@@ -37,7 +37,7 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
-        public ViewResult Card(Guid id)
+        public ViewResult Card(int id)
         {
             var model = new CardViewModel
             {

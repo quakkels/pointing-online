@@ -8,6 +8,6 @@ namespace PointingPoker.Domain
     {
         bool CreateTeam(Team team, IEnumerable<string> memberEmails);
         IEnumerable<Team> GetTeamsByUser(Guid memberUserId);
-        Team GetTeam(Guid teamId);
+        Team GetTeam(int teamId);
     }
 }

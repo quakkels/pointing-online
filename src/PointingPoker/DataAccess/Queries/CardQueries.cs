@@ -41,7 +41,7 @@ namespace PointingPoker.DataAccess.Queries
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId)
+        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
@@ -58,7 +58,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public IEnumerable<Card> GetOpenCardsForTeam(Guid teamId)
+        public IEnumerable<Card> GetOpenCardsForTeam(int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

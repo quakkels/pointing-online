@@ -20,8 +20,8 @@ namespace PointingPoker.Domain
 
         public bool CreateTeam(Team team, IEnumerable<string> memberEmails)
         {
-            if (team.Id == Guid.Empty
-                || string.IsNullOrEmpty(team.Name)
+            if (
+                string.IsNullOrEmpty(team.Name)
                 || team.CreatedBy == Guid.Empty)
             {
                 return false;
@@ -34,9 +34,11 @@ namespace PointingPoker.Domain
                 memberEmails = new List<string>();
             }
 
-            _teamCommands.CreateTeam(
+            var teamId = _teamCommands.CreateTeam(
                 team, 
                 memberEmails);
+
+            team.Id = teamId;
 
             return true;
         }
@@ -47,7 +49,7 @@ namespace PointingPoker.Domain
             return teams;
         }
 
-        public Team GetTeam(Guid teamId)
+        public Team GetTeam(int teamId)
         {
             return _teamQueries.GetTeam(teamId);
         }

@@ -22,7 +22,7 @@ namespace PointingPoker.Domain
             if (
                 card.CreatedBy == Guid.Empty
                 || string.IsNullOrEmpty(card.Description)
-                || card.TeamId == Guid.Empty)
+                || card.TeamId == 0)
             {
                 return 0;
             }
@@ -37,12 +37,12 @@ namespace PointingPoker.Domain
             return id;
         }
 
-        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId)
+        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, int teamId)
         {
             return _cardQueries.GetCardsToPointForTeam(userId, teamId);
         }
 
-        public IEnumerable<Card> GetOpenCardsForTeam(Guid teamId)
+        public IEnumerable<Card> GetOpenCardsForTeam(int teamId)
         {
             return _cardQueries.GetOpenCardsForTeam(teamId);
         }

@@ -73,7 +73,7 @@ namespace PointingPoker.Domain
             return true;
         }
 
-        public IEnumerable<string> GetUserNamesByTeam(Guid teamId)
+        public IEnumerable<string> GetUserNamesByTeam(int teamId)
         {
             return _userQueries.GetUserNamesByTeam(teamId);
         }

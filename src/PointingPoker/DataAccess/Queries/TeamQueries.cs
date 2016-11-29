@@ -29,7 +29,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public Team GetTeam(Guid teamId)
+        public Team GetTeam(int teamId)
         {
             using ( var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

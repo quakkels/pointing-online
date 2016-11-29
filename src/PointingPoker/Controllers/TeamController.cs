@@ -46,7 +46,7 @@ namespace PointingPoker.Controllers
 
             var team = new Team
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = model.Name,
                 CreatedBy = _currentUserId
             };
@@ -58,7 +58,7 @@ namespace PointingPoker.Controllers
             return RedirectToAction("Summary", "Team", new { id = team.Id });
         }
 
-        public ViewResult Summary(Guid id)
+        public ViewResult Summary(int id)
         {
             var model = new TeamSummaryViewModel
             {
