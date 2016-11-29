@@ -12,13 +12,16 @@ namespace PointingPoker.DataAccess.Commands
             _connectionProvider = connectionProvider;
         }
 
-        public void CreatePoint(Point point)
+        public int CreatePoint(Point point)
         {
             using(var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                conn.Execute(
-                    @"insert into Points (Id, PointedBy, CardId, Points) values (@Id, @PointedBy, @CardId, @Points)",
+                var id = conn.ExecuteScalar<int>(
+                    @"insert into Points (PointedBy, CardId, Points) values (@PointedBy, @CardId, @Points)
+                      select scope_identity()",
                     point);
+
+                return id;
             }
         }
     }

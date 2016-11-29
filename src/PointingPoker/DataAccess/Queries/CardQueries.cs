@@ -75,7 +75,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public Card GetCard(Guid cardId)
+        public Card GetCard(int cardId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
@@ -89,7 +89,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public bool IsCardClosedForPointing(Guid cardId)
+        public bool IsCardClosedForPointing(int cardId)
         {
             using ( var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

@@ -31,27 +31,12 @@ namespace PointingPoker.Tests
 
             _point = new Point
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 PointedBy = Guid.NewGuid(),
-                CardId = Guid.NewGuid(),
+                CardId = 1,
                 Points = 1,
                 DateCreated = DateTime.Now
             };
-        }
-
-        [Fact]
-        public void CannotCreatePointWhenPointIdIsEmpty()
-        {
-            // arrange
-            SetUp();
-            _point.Id = Guid.Empty;
-
-            // act
-            var result = service.PointCard(_point);
-
-            // assert
-            Assert.False(result);
-            _pointCommandsMock.Verify(x => x.CreatePoint(It.IsAny<Point>()), Times.Never);
         }
 
         [Fact]
@@ -59,7 +44,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
-            _point.CardId = Guid.Empty;
+            _point.CardId = 0;
 
             // act
             var result = service.PointCard(_point);
@@ -93,7 +78,7 @@ namespace PointingPoker.Tests
             // arrange
             SetUp();
             _cardQueriesMock
-                .Setup(x => x.IsCardClosedForPointing(It.IsAny<Guid>()))
+                .Setup(x => x.IsCardClosedForPointing(It.IsAny<int>()))
                 .Returns(true);
 
             // act

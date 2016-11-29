@@ -3,6 +3,6 @@
 namespace PointingPoker.DataAccess.Commands
 {    public interface IPointCommands
     {
-        void CreatePoint(Point point);
+        int CreatePoint(Point point);
     }
 }

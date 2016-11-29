@@ -12,15 +12,17 @@ namespace PointingPoker.DataAccess.Commands
             _connectionProvider = connectionProvider;
         }
 
-        public void CreateCard(Card card)
+        public int CreateCard(Card card)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var command = 
                     @"insert into Cards 
-                    (Id, Description, CreatedBy, IsPointingClosed, TeamId)
-                    values (@Id, @Description, @CreatedBy, @IsPointingClosed, @TeamId)";
-                conn.Execute(command, card);
+                    (Description, CreatedBy, IsPointingClosed, TeamId)
+                    values (@Description, @CreatedBy, @IsPointingClosed, @TeamId)
+                    select scope_identity()";
+                var id = conn.ExecuteScalar<int>(command, card);
+                return id;
             }
         }
     }

@@ -57,14 +57,13 @@ namespace PointingPoker.Controllers
 
             var card = new Card
             {
-                Id = Guid.NewGuid(),
                 Description = model.Description,
                 CreatedBy = model.CreatedBy,
                 IsPointingClosed = model.IsPointingClosed,
                 TeamId = model.TeamId
             };
 
-            if (!_cardService.CreateCard(card))
+            if (_cardService.CreateCard(card) == 0)
             {
                 ModelState.AddModelError("Description", "Could not create this card.");
                 return View(model);
@@ -73,7 +72,7 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
-        public ViewResult Point(Guid id)
+        public ViewResult Point(int id)
         {
             var model = new PointViewModel
             {
@@ -96,7 +95,6 @@ namespace PointingPoker.Controllers
 
             var point = new Point
             {
-                Id = Guid.NewGuid(),
                 PointedBy = _currentUserId,
                 CardId = model.Card.Id,
                 Points = model.PointValue

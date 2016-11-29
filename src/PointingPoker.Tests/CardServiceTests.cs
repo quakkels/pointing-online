@@ -30,26 +30,12 @@ namespace PointingPoker.Tests
 
             _card = new Card
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 CreatedBy = Guid.NewGuid(),
                 Description = "description",
                 IsPointingClosed = false,
                 TeamId = Guid.NewGuid()
             };
-        }
-
-        [Fact]
-        public void WillNotSaveCardWithMissingId()
-        {
-            // arrange
-            Setup();
-            _card.Id = Guid.Empty;
-
-            // act
-            var result = _cardService.CreateCard(_card);
-
-            // assert
-            Assert.False(result);
         }
 
         [Fact]
@@ -63,7 +49,7 @@ namespace PointingPoker.Tests
             var result = _cardService.CreateCard(_card);
 
             // assert
-            Assert.False(result);
+            Assert.Equal(0, result);
         }
 
         [Fact]
@@ -79,8 +65,8 @@ namespace PointingPoker.Tests
             var result2 = _cardService.CreateCard(_card);
 
             // assert
-            Assert.False(result);
-            Assert.False(result2);
+            Assert.Equal(0, result);
+            Assert.Equal(0, result2);
         }
 
         [Fact]
@@ -94,7 +80,7 @@ namespace PointingPoker.Tests
             var result = _cardService.CreateCard(_card);
 
             // assert
-            Assert.False(result);
+            Assert.Equal(0, result);
         }
 
         [Fact]
@@ -110,7 +96,7 @@ namespace PointingPoker.Tests
             var result = _cardService.CreateCard(_card);
 
             // assert
-            Assert.False(result);
+            Assert.Equal(0, result);
         }
 
         [Fact]
@@ -118,12 +104,17 @@ namespace PointingPoker.Tests
         {
             // arrange
             Setup();
+            _cardCommandsMock
+                .Setup(x => x.CreateCard(It.IsAny<Card>()))
+                .Returns(1);
+            _card.Id = 0;
 
             // act
             var result = _cardService.CreateCard(_card);
 
             // assert
-            Assert.True(result);
+            Assert.Equal(1, result);
+            Assert.Equal(1, _card.Id);
             _cardCommandsMock
                 .Verify(
                 x => x.CreateCard(_card), Times.Once);

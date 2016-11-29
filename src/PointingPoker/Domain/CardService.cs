@@ -17,24 +17,24 @@ namespace PointingPoker.Domain
             _cardQueries = cardQueries;
         }
 
-        public bool CreateCard(Card card)
+        public int CreateCard(Card card)
         {
             if (
-                card.Id == Guid.Empty
-                || card.CreatedBy == Guid.Empty
+                card.CreatedBy == Guid.Empty
                 || string.IsNullOrEmpty(card.Description)
                 || card.TeamId == Guid.Empty)
             {
-                return false;
+                return 0;
             }
 
             if (!_cardQueries.DoesCardCreatorExist(card.CreatedBy))
             {
-                return false;
+                return 0;
             }
 
-            _cardCommands.CreateCard(card);
-            return true;
+            var id = _cardCommands.CreateCard(card);
+            card.Id = id;
+            return id;
         }
 
         public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId)
@@ -47,7 +47,7 @@ namespace PointingPoker.Domain
             return _cardQueries.GetOpenCardsForTeam(teamId);
         }
 
-        public Card GetCard(Guid cardId)
+        public Card GetCard(int cardId)
         {
             return _cardQueries.GetCard(cardId);
         }
