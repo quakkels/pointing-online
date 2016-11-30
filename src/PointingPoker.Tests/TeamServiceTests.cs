@@ -23,7 +23,7 @@ namespace PointingPoker.Tests
             {
                 Id = 1,
                 Name = "Name",
-                CreatedBy = Guid.NewGuid()
+                CreatedBy = 1
             };
 
             _teamCommands = new Mock<ITeamCommands>();
@@ -58,7 +58,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
-            _team.CreatedBy = Guid.Empty;
+            _team.CreatedBy = 0;
 
             // act
             var result = _service.CreateTeam(_team, _memberEmails);

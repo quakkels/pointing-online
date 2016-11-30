@@ -6,7 +6,7 @@ namespace PointingPoker.DataAccess.Commands
     public interface IUserCommands
     {
         void CreateUser(User user);
-        void UpdateUserInfo(Guid id, string username, string email);
-        void UpdatePassword(Guid id, string passwordHash);
+        void UpdateUserInfo(int id, string username, string email);
+        void UpdatePassword(int id, string passwordHash);
     }
 }

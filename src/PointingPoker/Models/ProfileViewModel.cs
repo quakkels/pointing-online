@@ -7,7 +7,7 @@ namespace PointingPoker.Models
     public class ProfileViewModel
     {
         [Required]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "User Name")]

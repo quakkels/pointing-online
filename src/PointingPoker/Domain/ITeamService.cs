@@ -7,7 +7,7 @@ namespace PointingPoker.Domain
     public interface ITeamService
     {
         bool CreateTeam(Team team, IEnumerable<string> memberEmails);
-        IEnumerable<Team> GetTeamsByUser(Guid memberUserId);
+        IEnumerable<Team> GetTeamsByUser(int memberUserId);
         Team GetTeam(int teamId);
     }
 }

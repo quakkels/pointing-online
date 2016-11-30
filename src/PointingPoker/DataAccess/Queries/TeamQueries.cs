@@ -15,7 +15,7 @@ namespace PointingPoker.DataAccess.Queries
             _connectionProvider = connectionProvider;
         }
 
-        public IEnumerable<Team> GetTeamsByUser(Guid memberUserId)
+        public IEnumerable<Team> GetTeamsByUser(int memberUserId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
@@ -33,13 +33,13 @@ namespace PointingPoker.DataAccess.Queries
         {
             using ( var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var teams = conn.Query<Team>(
+                var team = conn.QueryFirst<Team>(
                     @"select top 1 [Id], [Name], [CreatedBy]
                     from Teams
                     where Id = @teamId",
                     new { teamId });
 
-                return teams?.FirstOrDefault();
+                return team;
             }
         }
     }

@@ -6,6 +6,6 @@ namespace PointingPoker.Domain
     public interface IPointService
     {
         bool PointCard(Point point);
-        int GetCardPoint(int cardId, Guid userId);
+        int GetCardPoint(int cardId, int userId);
     }
 }

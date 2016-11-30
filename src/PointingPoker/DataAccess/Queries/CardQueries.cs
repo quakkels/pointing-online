@@ -15,7 +15,7 @@ namespace PointingPoker.DataAccess.Queries
             _connectionProvider = connectionProvider;
         }
             
-        public bool DoesCardCreatorExist(Guid creatorId)
+        public bool DoesCardCreatorExist(int creatorId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
@@ -30,18 +30,18 @@ namespace PointingPoker.DataAccess.Queries
 	                else cast(0 as bit)
                     end as [exists]";
 
-                var exists = conn.Query<bool>(query, new { creatorId });
-                return exists.FirstOrDefault();
+                var exists = conn.QueryFirst<bool>(query, new { creatorId });
+                return exists;
 
             }
         }
 
-        public IEnumerable<Card> GetCardsToPointByUser(Guid userId)
+        public IEnumerable<Card> GetCardsToPointByUser(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, int teamId)
+        public IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

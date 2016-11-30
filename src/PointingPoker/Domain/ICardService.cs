@@ -7,7 +7,7 @@ namespace PointingPoker.Domain
     public interface ICardService
     {
         int CreateCard(Card card);
-        IEnumerable<Card> GetCardsToPointForTeam(Guid userId, int teamId);
+        IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId);
         IEnumerable<Card> GetOpenCardsForTeam(int teamId);
         Card GetCard(int cardId);
     }

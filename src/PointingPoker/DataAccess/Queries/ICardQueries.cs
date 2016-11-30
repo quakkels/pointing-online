@@ -6,9 +6,9 @@ namespace PointingPoker.DataAccess.Queries
 {
     public interface ICardQueries
     {
-        bool DoesCardCreatorExist(Guid creatorId);
-        IEnumerable<Card> GetCardsToPointByUser(Guid userId);
-        IEnumerable<Card> GetCardsToPointForTeam(Guid userId, int teamId);
+        bool DoesCardCreatorExist(int creatorId);
+        IEnumerable<Card> GetCardsToPointByUser(int userId);
+        IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId);
         IEnumerable<Card> GetOpenCardsForTeam(int teamId);
         Card GetCard(int cardId);
         bool IsCardClosedForPointing(int cardId);

@@ -6,10 +6,10 @@ namespace PointingPoker.Domain
 {
     public interface ISecurityService
     {
-        Task SignIn(Guid userId);
+        Task SignIn(int userId);
         Task SignOut();
         bool VerifyUserPassword(string username, string password);
-        Guid GetCurrentUserId();
+        int GetCurrentUserId();
         SignedInUser GetSignedInUser();
     }
 }

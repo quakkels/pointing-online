@@ -12,7 +12,7 @@ namespace PointingPoker.DataAccess.Queries
             _connectionProvider = connectionProvider;
         }
 
-        public int GetCardPoints(int cardId, Guid userId)
+        public int GetCardPoints(int cardId, int userId)
         {
             using(var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

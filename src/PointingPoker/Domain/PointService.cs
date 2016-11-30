@@ -25,7 +25,7 @@ namespace PointingPoker.Domain
         {
             if (
                 point.CardId == 0
-                || point.PointedBy == Guid.Empty)
+                || point.PointedBy == 0)
             {
                 return false;
             }
@@ -43,7 +43,7 @@ namespace PointingPoker.Domain
             return true;
         }
 
-        public int GetCardPoint(int cardId, Guid userId)
+        public int GetCardPoint(int cardId, int userId)
         {
             return _pointQueries.GetCardPoints(cardId, userId);
         }

@@ -22,7 +22,7 @@ namespace PointingPoker.Domain
         {
             if (
                 string.IsNullOrEmpty(team.Name)
-                || team.CreatedBy == Guid.Empty)
+                || team.CreatedBy == 0)
             {
                 return false;
             }
@@ -43,7 +43,7 @@ namespace PointingPoker.Domain
             return true;
         }
 
-        public IEnumerable<Team> GetTeamsByUser(Guid memberUserId)
+        public IEnumerable<Team> GetTeamsByUser(int memberUserId)
         {
             var teams = _teamQueries.GetTeamsByUser(memberUserId);
             return teams;

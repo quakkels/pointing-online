@@ -10,7 +10,7 @@ namespace PointingPoker.Controllers
     [Authorize]
     public class PointinatingController : Controller
     {
-        private Guid _currentUserId;
+        private int _currentUserId;
         private readonly ICardService _cardService;
         private readonly ITeamService _teamService;
         private readonly IPointService _pointService;

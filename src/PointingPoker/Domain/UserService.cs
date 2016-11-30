@@ -21,7 +21,7 @@ namespace PointingPoker.Domain
             return _userQueries.GetUserByUserName(username);
         }
 
-        public User GetUserById(Guid id)
+        public User GetUserById(int id)
         {
             return _userQueries.GetUserById(id);
         }
@@ -43,10 +43,10 @@ namespace PointingPoker.Domain
             return true;
         }
 
-        public bool UpdateUserInfo(Guid id, string username, string email)
+        public bool UpdateUserInfo(int id, string username, string email)
         {
             if (
-                id == Guid.Empty 
+                id == 0 
                 || string.IsNullOrEmpty(username)
                 || string.IsNullOrEmpty(email))
             {
@@ -62,9 +62,9 @@ namespace PointingPoker.Domain
             return true;
         }
 
-        public bool UpdatePassword(Guid id, string newPassword)
+        public bool UpdatePassword(int id, string newPassword)
         {
-            if (id == Guid.Empty || string.IsNullOrEmpty(newPassword))
+            if (id == 0 || string.IsNullOrEmpty(newPassword))
             {
                 return false;
             }

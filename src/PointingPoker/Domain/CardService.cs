@@ -20,8 +20,7 @@ namespace PointingPoker.Domain
         public int CreateCard(Card card)
         {
             if (
-                card.CreatedBy == Guid.Empty
-                || string.IsNullOrEmpty(card.Description)
+                string.IsNullOrEmpty(card.Description)
                 || card.TeamId == 0)
             {
                 return 0;
@@ -37,7 +36,7 @@ namespace PointingPoker.Domain
             return id;
         }
 
-        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, int teamId)
+        public IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId)
         {
             return _cardQueries.GetCardsToPointForTeam(userId, teamId);
         }

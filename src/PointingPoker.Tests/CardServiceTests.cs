@@ -21,7 +21,7 @@ namespace PointingPoker.Tests
             _cardCommandsMock = new Mock<ICardCommands>();
             _cardQueriesMock = new Mock<ICardQueries>();
             _cardQueriesMock
-                .Setup(x => x.DoesCardCreatorExist(It.IsAny<Guid>()))
+                .Setup(x => x.DoesCardCreatorExist(It.IsAny<int>()))
                 .Returns(true);
 
             _cardService = new CardService(
@@ -31,7 +31,7 @@ namespace PointingPoker.Tests
             _card = new Card
             {
                 Id = 1,
-                CreatedBy = Guid.NewGuid(),
+                CreatedBy = 1,
                 Description = "description",
                 IsPointingClosed = false,
                 TeamId = 1
@@ -43,7 +43,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             Setup();
-            _card.CreatedBy = Guid.Empty;
+            _card.CreatedBy = 0;
 
             // act
             var result = _cardService.CreateCard(_card);
@@ -89,7 +89,7 @@ namespace PointingPoker.Tests
             // arrange
             Setup();
             _cardQueriesMock
-                .Setup(x => x.DoesCardCreatorExist(It.IsAny<Guid>()))
+                .Setup(x => x.DoesCardCreatorExist(It.IsAny<int>()))
                 .Returns(false);
 
             // act

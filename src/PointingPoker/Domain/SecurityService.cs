@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using PointingPoker.DataAccess.Queries;
 using PointingPoker.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -21,7 +20,7 @@ namespace PointingPoker.Domain
             _userQueries = userQueries;
         }
 
-        public async Task SignIn(Guid userId)
+        public async Task SignIn(int userId)
         {
             var claims = new List<Claim>();
             claims.Add(new Claim(CLAIM_TYPE_ID, userId.ToString()));
@@ -53,7 +52,7 @@ namespace PointingPoker.Domain
             return password == retrievedPassword;
         }
 
-        public Guid GetCurrentUserId()
+        public int GetCurrentUserId()
         {
             var userId = _httpContext
                 .User
@@ -61,18 +60,24 @@ namespace PointingPoker.Domain
                 .FirstOrDefault(x => x.Type == CLAIM_TYPE_ID)
                 ?.Value;
 
-            return string.IsNullOrEmpty(userId)
-                ? Guid.Empty
-                : Guid.Parse(userId);   
+            int id;
+            int.TryParse(userId, out id);
+            return id;   
         }
 
         public SignedInUser GetSignedInUser()
         {
             var id = GetCurrentUserId();
             var user = _userQueries.GetUserById(id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
             var signedInUser = new SignedInUser
             {
-                Id = user?.Id == null ? Guid.Empty : user.Id,
+                Id = user.Id,
                 UserName = user?.UserName
             };
 

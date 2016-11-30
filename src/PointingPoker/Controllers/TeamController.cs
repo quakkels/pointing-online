@@ -15,7 +15,7 @@ namespace PointingPoker.Controllers
         private readonly ICardService _cardService;
         private readonly IUserService _userService;
 
-        private Guid _currentUserId;
+        private int _currentUserId;
 
         public TeamController(
             ITeamService teamService, 

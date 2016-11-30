@@ -6,6 +6,6 @@ namespace PointingPoker.DataAccess.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Guid CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
     }
 }

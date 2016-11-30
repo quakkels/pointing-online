@@ -20,7 +20,7 @@ namespace PointingPoker.Domain
         public bool IsSignedIn()
         {
             var userId = _securityService.GetCurrentUserId();
-            return userId != Guid.Empty;
+            return userId != 0;
         }
     }
 }

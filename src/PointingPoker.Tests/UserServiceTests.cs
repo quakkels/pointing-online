@@ -33,7 +33,7 @@ namespace PointingPoker.Tests
                 .Returns(new List<User>
                 {
                     new User{
-                        Id = Guid.NewGuid(),
+                        Id = 1,
                         UserName = "bob",
                         Email = "email@email"
                     }
@@ -113,7 +113,7 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdateUserInfo(Guid.Empty, "username", "email");
+            var result = service.UpdateUserInfo(0, "username", "email");
 
             // assert
             Assert.False(result);
@@ -129,8 +129,8 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdateUserInfo(Guid.NewGuid(), "username", null);
-            var result2 = service.UpdateUserInfo(Guid.NewGuid(), "username", "");
+            var result = service.UpdateUserInfo(1, "username", null);
+            var result2 = service.UpdateUserInfo(1, "username", "");
 
             // assert
             Assert.False(result);
@@ -147,8 +147,8 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdateUserInfo(Guid.NewGuid(), "", "email");
-            var result2 = service.UpdateUserInfo(Guid.NewGuid(), null, "email");
+            var result = service.UpdateUserInfo(1, "", "email");
+            var result2 = service.UpdateUserInfo(1, null, "email");
 
             // assert
             Assert.False(result);
@@ -161,14 +161,14 @@ namespace PointingPoker.Tests
             // arrange
             Setup();
             _userQueriesMock
-                .Setup(x => x.DoesUserNameExist(It.IsAny<Guid>(), It.IsAny<string>()))
+                .Setup(x => x.DoesUserNameExist(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(true);
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdateUserInfo(Guid.NewGuid(), "duplicate", "email");
+            var result = service.UpdateUserInfo(1, "duplicate", "email");
 
             // assert
             Assert.False(result);
@@ -184,12 +184,12 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdateUserInfo(Guid.NewGuid(), "username", "email");
+            var result = service.UpdateUserInfo(1, "username", "email");
 
             Assert.True(result);
             _userCommandsMock.Verify(
                 x => x.UpdateUserInfo(
-                    It.IsAny<Guid>(),
+                    It.IsAny<int>(),
                     It.IsAny<string>(),
                     It.IsAny<string>()),
                 Times.Once);
@@ -205,7 +205,7 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdatePassword(Guid.Empty, "password");
+            var result = service.UpdatePassword(0, "password");
 
             // assert
             Assert.False(result);
@@ -221,8 +221,8 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdatePassword(Guid.NewGuid(), "");
-            var result2 = service.UpdatePassword(Guid.NewGuid(), null);
+            var result = service.UpdatePassword(1, "");
+            var result2 = service.UpdatePassword(1, null);
 
             // assert
             Assert.False(result);
@@ -239,14 +239,14 @@ namespace PointingPoker.Tests
                 _userCommandsMock.Object);
 
             // act
-            var result = service.UpdatePassword(Guid.NewGuid(), "newpassword");
+            var result = service.UpdatePassword(1, "newpassword");
 
             // assert
             Assert.True(result);
             _userCommandsMock.Verify(
                 x => x.UpdatePassword(
-                    It.IsAny<Guid>(), 
-                    It.IsAny<string>()), 
+                    It.IsAny<int>(),
+                    It.IsAny<string>()),
                 Times.Once);
         }
     }

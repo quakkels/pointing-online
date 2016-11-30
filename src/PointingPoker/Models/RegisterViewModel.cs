@@ -6,7 +6,7 @@ namespace PointingPoker.Models
     public class RegisterViewModel
     {
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "User Name")]
@@ -20,10 +20,5 @@ namespace PointingPoker.Models
 
         [Compare("Password")]
         public string VerifyPassword { get; set; }
-
-        public RegisterViewModel()
-        {
-            Id = Guid.NewGuid();
-        }
     }
 }

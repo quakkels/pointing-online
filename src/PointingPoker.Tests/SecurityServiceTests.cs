@@ -3,8 +3,6 @@ using Moq;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
 using PointingPoker.Domain;
-using PointingPoker.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Xunit;
@@ -13,7 +11,7 @@ namespace PointingPoker.Tests
 {
     public class SecurityServiceTests
     {
-        private Mock<IUserQueries> _userQueryiesMock;
+        private Mock<IUserQueries> _userQueriesMock;
         private Mock<IHttpContextAccessor> _httpContextAccessor;
         private List<Claim> _claims;
         private User _user;
@@ -22,10 +20,10 @@ namespace PointingPoker.Tests
         private void SetUp()
         {
             _claims = new List<Claim>();
-            _claims.Add(new Claim("id", Guid.NewGuid().ToString()));
+            _claims.Add(new Claim("id", 1.ToString()));
 
             _user = new User {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 UserName = "username",
                 Email = "email",
                 PasswordHash = "password"
@@ -36,20 +34,20 @@ namespace PointingPoker.Tests
                 .Setup(x => x.HttpContext.User.Claims)
                 .Returns(_claims);
 
-            _userQueryiesMock = new Mock<IUserQueries>();
-            _userQueryiesMock
+            _userQueriesMock = new Mock<IUserQueries>();
+            _userQueriesMock
                 .Setup(x => x.GetPasswordHashByUserName(It.Is<string>(y => y != "user")))
                 .Returns((string)null);
-            _userQueryiesMock
+            _userQueriesMock
                 .Setup(x => x.GetPasswordHashByUserName(It.Is<string>(y => y == "user")))
                 .Returns("match");
-            _userQueryiesMock
-                .Setup(x => x.GetUserById(It.IsAny<Guid>()))
+            _userQueriesMock
+                .Setup(x => x.GetUserById(It.IsAny<int>()))
                 .Returns(_user);
 
             _service = new SecurityService(
                 _httpContextAccessor.Object,
-                _userQueryiesMock.Object);
+                _userQueriesMock.Object);
         }
 
         [Fact]
@@ -131,7 +129,7 @@ namespace PointingPoker.Tests
             var result = _service.GetCurrentUserId();
 
             // assert
-            Assert.Equal(Guid.Parse(_claims[0].Value), result);
+            Assert.Equal(int.Parse(_claims[0].Value), result);
         }
 
         [Fact]
@@ -146,6 +144,21 @@ namespace PointingPoker.Tests
             // assert
             Assert.Equal(_user.Id, result.Id);
             Assert.Equal(_user.UserName, result.UserName);
+        }
+
+        [Fact]
+        public void WillNotErrorWhenNotSignedIn()
+        {
+            // arrange
+            SetUp();
+            _httpContextAccessor.Setup(x => x.HttpContext.User.Claims).Returns(new List<Claim>());
+            _userQueriesMock.Setup(x => x.GetUserById(0)).Returns((User)null);
+
+            // act
+            var result = _service.GetSignedInUser();
+
+            // assert
+            Assert.Null(result);
         }
     }
 }

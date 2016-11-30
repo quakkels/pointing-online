@@ -32,7 +32,7 @@ namespace PointingPoker.Tests
             _point = new Point
             {
                 Id = 1,
-                PointedBy = Guid.NewGuid(),
+                PointedBy = 1,
                 CardId = 1,
                 Points = 1,
                 DateCreated = DateTime.Now
@@ -59,7 +59,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
-            _point.PointedBy = Guid.Empty;
+            _point.PointedBy = 0;
 
             // act
             var result = service.PointCard(_point);
