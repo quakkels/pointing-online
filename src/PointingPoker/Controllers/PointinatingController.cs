@@ -48,7 +48,7 @@ namespace PointingPoker.Controllers
         }
 
         [HttpPost]
-        public ViewResult Card(CardViewModel model)
+        public ActionResult Card(CardViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace PointingPoker.Controllers
                 return View(model);
             }
 
-            return View(model);
+            return RedirectToAction("Summary", "Team", new { id =  card.TeamId});
         }
 
         public ViewResult Point(int id)

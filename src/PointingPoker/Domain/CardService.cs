@@ -1,7 +1,6 @@
 ﻿using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
-using System;
 using System.Collections.Generic;
 
 namespace PointingPoker.Domain
