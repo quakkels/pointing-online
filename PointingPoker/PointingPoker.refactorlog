@@ -14,4 +14,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="IsPointingClosed" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="aab30c01-5e91-4d4e-9657-8a35c9904c17" ChangeDateTime="12/14/2016 00:59:55">
+    <Property Name="ElementName" Value="[dbo].[Cards].[IsPointingClosed]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Cards]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ClosedBy" />
+  </Operation>
 </Operations>
