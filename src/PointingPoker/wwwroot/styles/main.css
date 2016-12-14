@@ -279,11 +279,12 @@ label input {
     color: #b73737;
 }
 
-button, .button {
+button, .button, .button-small {
     display:inline-block;
     color: #fff;
     background: chocolate;
     padding: 6px 10px;
+    margin:0;
     border-radius:8px;
     border: none;
     cursor: pointer;
@@ -293,6 +294,19 @@ button, .button {
    -ms-user-select: none;
    user-select: none;
 }
+
+.button-small {
+    padding: 2px 4px;
+    font-size: .8em;
+    border-radius:4px;
+}
+
+button:hover,
+.button:hover,
+.button-small:hover {
+    background:#B5581B;
+}
+
 input[type=radio], input[type=checkbox] { 
     cursor:pointer;
 }  

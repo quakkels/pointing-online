@@ -1,0 +1,11 @@
+﻿@model PointingPoker.DataAccess.Models.Card
+<h1>Close Pointing</h1>
+<p>
+    Do you want to close pointing for <strong>@Model.Description</strong>?
+</p>
+<form method="post" action="@Url.Action("ClosePointing", new { Model.Id })">
+    <p>
+        <button type="submit">Close Pointing</button>
+        <a class="button" href="@Url.Action("Summary","Team", new { id = Model.TeamId })">Don't Close</a>
+    </p>
+</form>

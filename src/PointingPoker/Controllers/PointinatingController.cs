@@ -59,7 +59,7 @@ namespace PointingPoker.Controllers
             {
                 Description = model.Description,
                 CreatedBy = model.CreatedBy,
-                IsPointingClosed = model.IsPointingClosed,
+                ClosedBy = model.ClosedBy,
                 TeamId = model.TeamId
             };
 
@@ -107,6 +107,20 @@ namespace PointingPoker.Controllers
             }
 
             return RedirectToAction("Summary", "Team", new { id = model.Card.TeamId });
+        }
+
+        public ViewResult Close(int id)
+        {
+            var card = _cardService.GetCard(id);
+            return View(card);
+        }
+
+        [HttpPost]
+        public ActionResult ClosePointing(int id)
+        {
+            var card = _cardService.GetCard(id);
+            // todo: _cardService.ClosePointing(id);
+            return RedirectToAction("Summary", "Team", new { id = card.TeamId });
         }
     }
 }

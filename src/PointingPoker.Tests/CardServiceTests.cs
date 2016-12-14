@@ -33,7 +33,7 @@ namespace PointingPoker.Tests
                 Id = 1,
                 CreatedBy = 1,
                 Description = "description",
-                IsPointingClosed = false,
+                ClosedBy = 0,
                 TeamId = 1
             };
         }

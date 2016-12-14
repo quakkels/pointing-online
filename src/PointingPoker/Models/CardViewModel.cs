@@ -11,7 +11,7 @@ namespace PointingPoker.Models
         [Required, MaxLength(512)]
         public string Description { get; set; }
 
-        public bool IsPointingClosed { get; set; }
+        public int? ClosedBy { get; set; }
 
         [Required]
         public int TeamId { get; set; }

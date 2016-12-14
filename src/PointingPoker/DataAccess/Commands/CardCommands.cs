@@ -16,10 +16,10 @@ namespace PointingPoker.DataAccess.Commands
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var command = 
+                var command =
                     @"insert into Cards 
-                    (Description, CreatedBy, IsPointingClosed, TeamId)
-                    values (@Description, @CreatedBy, @IsPointingClosed, @TeamId)
+                    (Description, CreatedBy, ClosedBy, TeamId)
+                    values (@Description, @CreatedBy, @ClosedBy, @TeamId)
                     select scope_identity()";
                 var id = conn.ExecuteScalar<int>(command, card);
                 return id;

@@ -46,7 +46,7 @@ namespace PointingPoker.DataAccess.Queries
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var cards = conn.Query<Card>(
-                    @"select [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    @"select [Id], [Description], [CreatedBy], [ClosedBy], [TeamId], [DateCreated]
                     from Cards
                     where 
 	                    not exists (select 1 from Points where Points.PointedBy = @userId and Points.CardId = Cards.Id)
@@ -63,10 +63,10 @@ namespace PointingPoker.DataAccess.Queries
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var cards = conn.Query<Card>(
-                    @"select [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    @"select [Id], [Description], [CreatedBy], [ClosedBy], [TeamId], [DateCreated]
                     from Cards
                     where
-	                    IsPointingClosed = 0
+	                    ClosedBy is null
 	                    and Cards.TeamId = @teamId
                     order by DateCreated",
                     new { teamId });
@@ -80,7 +80,7 @@ namespace PointingPoker.DataAccess.Queries
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var card = conn.QueryFirstOrDefault<Card>(
-                    @"select top 1 [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    @"select top 1 [Id], [Description], [CreatedBy], [ClosedBy], [TeamId], [DateCreated]
                     from Cards
                     where [Id] = @cardId",
                     new { cardId });
@@ -94,7 +94,11 @@ namespace PointingPoker.DataAccess.Queries
             using ( var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var result = conn.QueryFirstOrDefault<bool>(
-                    @"select top 1 [IsPointingClosed]
+                    @"select top 1 
+	                    case when ClosedBy is null 
+	                    then 'False'
+	                    else 'True '
+	                    end
                     from Cards
                     where Id = @cardId",
                     new { cardId });
