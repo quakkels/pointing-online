@@ -66,7 +66,8 @@ namespace PointingPoker.Controllers
                 CardsToPoint = _cardService.GetCardsToPointForTeam(_currentUserId, id),
                 PointedCards = _cardService.GetOpenCardsForTeam(id),
                 TeamUserNames = _userService.GetUserNamesByTeam(id),
-                Teams = _teamService.GetTeamsByUser(_currentUserId)
+                Teams = _teamService.GetTeamsByUser(_currentUserId),
+                ClosedCards = _cardService.GetClosedCardsForTeam(id, _currentUserId)
             };
 
             return View(model);

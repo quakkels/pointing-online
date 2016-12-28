@@ -27,10 +27,29 @@
                 {
                     <li>
                         <a href="@Url.Action("Point", "Pointinating", new { id = card.Id })">@card.Description</a>
+                        @if (!card.IsClosed)
+                        {
+                            <a href="@Url.Action("Close", "Pointinating", new { id = card.Id })"
+                               class="button-small"
+                               style="float:right;">Close Pointing</a>
+                        }
+                    </li>
+                }
+            </ul>
+            <h3>Closed Cards</h3>
+            <ul class="alternating">
+                @if (!Model.ClosedCards.Any())
+                {
+                    <li>No closed cards.</li>
+                }
+                @foreach (var card in Model.ClosedCards)
+                {
+                    <li>
+                        <a href="@Url.Action("Point", "Pointinating", new { id = card.Id })">@card.Description</a>
                         @if (card.ClosedBy == null)
                         {
-                            <a href="@Url.Action("Close", "Pointinating", new { id = card.Id })" 
-                               class="button-small" 
+                            <a href="@Url.Action("Close", "Pointinating", new { id = card.Id })"
+                               class="button-small"
                                style="float:right;">Close Pointing</a>
                         }
                     </li>

@@ -51,6 +51,7 @@ namespace PointingPoker.DataAccess.Queries
                     where 
 	                    not exists (select 1 from Points where Points.PointedBy = @userId and Points.CardId = Cards.Id)
 	                    and Cards.TeamId = @teamId
+                        and (Cards.ClosedBy is null or Cards.ClosedBy = 0)
                     order by DateCreated",
                     new { userId, teamId });
 
@@ -114,7 +115,8 @@ namespace PointingPoker.DataAccess.Queries
                 var result = conn.Query<Card>(
                     @"select ClosedBy, CreatedBy, DateCreated, [Description], Id, TeamId
                     from Cards
-                    where TeamId = @teamId and ClosedBy <> 0 and ClosedBy is not null", 
+                    where TeamId = @teamId and ClosedBy <> 0 and ClosedBy is not null
+                    order by DateCreated", 
                     new { teamId });
 
                 return result;
