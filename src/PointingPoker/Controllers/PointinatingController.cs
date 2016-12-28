@@ -119,7 +119,7 @@ namespace PointingPoker.Controllers
         public ActionResult ClosePointing(int id)
         {
             var card = _cardService.GetCard(id);
-            // todo: _cardService.ClosePointing(id);
+            _cardService.ClosePointing(id, _currentUserId);
             return RedirectToAction("Summary", "Team", new { id = card.TeamId });
         }
     }

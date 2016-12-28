@@ -106,5 +106,19 @@ namespace PointingPoker.DataAccess.Queries
                 return result;
             }
         }
+
+        public IEnumerable<Card> GetClosedCardsForTeam(int teamId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var result = conn.Query<Card>(
+                    @"select ClosedBy, CreatedBy, DateCreated, [Description], Id, TeamId
+                    from Cards
+                    where TeamId = @teamId and ClosedBy <> 0 and ClosedBy is not null", 
+                    new { teamId });
+
+                return result;
+            }
+        }
     }
 }

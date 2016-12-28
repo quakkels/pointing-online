@@ -4,6 +4,8 @@ using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
 using Xunit;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PointingPoker.Tests
 {
@@ -11,22 +13,34 @@ namespace PointingPoker.Tests
     {
         private Mock<ICardCommands> _cardCommandsMock;
         private Mock<ICardQueries> _cardQueriesMock;
+        private Mock<ITeamQueries> _teamQueriesMock;
 
         private Card _card;
         private CardService _cardService;
 
         public void Setup()
         {
+            _teamQueriesMock = new Mock<ITeamQueries>();
+            _teamQueriesMock
+                .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
+                .Returns(new List<Team> { new Team { Id = 1 } });
+
             _cardCommandsMock = new Mock<ICardCommands>();
 
             _cardQueriesMock = new Mock<ICardQueries>();
             _cardQueriesMock
                 .Setup(x => x.DoesCardCreatorExist(It.IsAny<int>()))
                 .Returns(true);
+            _cardQueriesMock
+                .Setup(x => x.GetClosedCardsForTeam(It.IsAny<int>()))
+                .Returns(new List<Card> {
+                    new Card { Id = 1 }
+                });
 
             _cardService = new CardService(
                 _cardCommandsMock.Object,
-                _cardQueriesMock.Object);
+                _cardQueriesMock.Object,
+                _teamQueriesMock.Object);
 
             _card = new Card
             {
@@ -155,8 +169,8 @@ namespace PointingPoker.Tests
         {
             // arrange
             Setup();
-            var cardId = 3;
-            var userId = 5;
+            var cardId = 1;
+            var userId = 1;
 
             // act
             var result = _cardService.ClosePointing(cardId, userId);
@@ -164,6 +178,41 @@ namespace PointingPoker.Tests
             // assert
             Assert.True(result);
             _cardCommandsMock.Verify(x => x.ClosePointing(cardId, userId), Times.Once);
+        }
+
+        [Fact]
+        public void CannotGetClosedCardsForNonTeamMember()
+        {
+            // arrange
+            Setup();
+            var teamId = 1;
+            var userId = 5422545; // not a member of any team
+            _teamQueriesMock
+                .Setup(x => x.GetTeamsByUser(It.Is<int>(y => y == userId)))
+                .Returns(new List<Team>());
+
+            // act 
+            var result = _cardService.GetClosedCardsForTeam(teamId, userId);
+
+            // assert
+            Assert.False(result.Any());
+        }
+
+        [Fact]
+
+        public void CanGetClosedCardsForTeam()
+        {
+            // arrange
+            Setup();
+            var teamId = 1;
+            var userId = 1;
+
+            // act
+            var result = _cardService.GetClosedCardsForTeam(teamId, userId);
+
+            // assert
+            Assert.NotNull(result);
+            Assert.True(result.Any());
         }
     }
 }

@@ -33,7 +33,7 @@ namespace PointingPoker.DataAccess.Commands
                 var command =
                     @"update Cards
                     set ClosedBy = @userId
-                    where cardId = @cardId";
+                    where Id = @cardId";
                 conn.Execute(command, new { cardId, userId });
             }
         }

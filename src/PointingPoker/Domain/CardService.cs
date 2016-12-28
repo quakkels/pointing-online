@@ -2,6 +2,7 @@
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PointingPoker.Domain
 {
@@ -9,11 +10,16 @@ namespace PointingPoker.Domain
     {
         private readonly ICardCommands _cardCommands;
         private readonly ICardQueries _cardQueries;
+        private readonly ITeamQueries _teamQueries;
 
-        public CardService(ICardCommands cardCommands, ICardQueries cardQueries)
+        public CardService(
+            ICardCommands cardCommands, 
+            ICardQueries cardQueries,
+            ITeamQueries teamQueries)
         {
             _cardCommands = cardCommands;
             _cardQueries = cardQueries;
+            _teamQueries = teamQueries;
         }
 
         public int CreateCard(Card card)
@@ -52,13 +58,25 @@ namespace PointingPoker.Domain
 
         public bool ClosePointing(int cardId, int userId)
         {
-            if (cardId <= 1 || userId <= 1)
+            if (cardId < 1 || userId < 1)
             {
                 return false;
             }
 
             _cardCommands.ClosePointing(cardId, userId);
             return true;
+        }
+
+        public IEnumerable<Card> GetClosedCardsForTeam(int teamId, int userId)
+        {
+            var teamsForUser = _teamQueries.GetTeamsByUser(userId);
+
+            if (teamsForUser.All(x => x.Id != teamId))
+            {
+                return new List<Card>();
+            }
+            
+            return _cardQueries.GetClosedCardsForTeam(teamId);
         }
     }
 }
