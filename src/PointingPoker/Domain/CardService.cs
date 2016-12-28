@@ -49,5 +49,16 @@ namespace PointingPoker.Domain
         {
             return _cardQueries.GetCard(cardId);
         }
+
+        public bool ClosePointing(int cardId, int userId)
+        {
+            if (cardId <= 1 || userId <= 1)
+            {
+                return false;
+            }
+
+            _cardCommands.ClosePointing(cardId, userId);
+            return true;
+        }
     }
 }

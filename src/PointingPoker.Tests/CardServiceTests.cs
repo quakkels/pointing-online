@@ -3,7 +3,6 @@ using PointingPoker.Domain;
 using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
-using System;
 using Xunit;
 
 namespace PointingPoker.Tests
@@ -19,6 +18,7 @@ namespace PointingPoker.Tests
         public void Setup()
         {
             _cardCommandsMock = new Mock<ICardCommands>();
+
             _cardQueriesMock = new Mock<ICardQueries>();
             _cardQueriesMock
                 .Setup(x => x.DoesCardCreatorExist(It.IsAny<int>()))
@@ -118,6 +118,52 @@ namespace PointingPoker.Tests
             _cardCommandsMock
                 .Verify(
                 x => x.CreateCard(_card), Times.Once);
+        }
+
+        [Fact]
+        public void WillNotCloseCardWithoutCardId()
+        {
+            // arrange
+            Setup();
+            var cardId = 0;
+            var userId = 1;
+
+            // act
+            var result = _cardService.ClosePointing(cardId, userId);
+
+            // assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void WillNotCloseCardWithoutUserId()
+        {
+            // arrange
+            Setup();
+            var cardId = 1;
+            var userId = 0;
+
+            // act
+            var result = _cardService.ClosePointing(cardId, userId);
+
+            // assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void WillClosePointingOnCard()
+        {
+            // arrange
+            Setup();
+            var cardId = 3;
+            var userId = 5;
+
+            // act
+            var result = _cardService.ClosePointing(cardId, userId);
+
+            // assert
+            Assert.True(result);
+            _cardCommandsMock.Verify(x => x.ClosePointing(cardId, userId), Times.Once);
         }
     }
 }

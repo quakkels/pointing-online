@@ -25,5 +25,17 @@ namespace PointingPoker.DataAccess.Commands
                 return id;
             }
         }
+
+        public void ClosePointing(int cardId, int userId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var command =
+                    @"update Cards
+                    set ClosedBy = @userId
+                    where cardId = @cardId";
+                conn.Execute(command, new { cardId, userId });
+            }
+        }
     }
 }
