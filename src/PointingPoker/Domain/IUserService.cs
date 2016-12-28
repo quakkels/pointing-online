@@ -1,5 +1,4 @@
 ﻿using PointingPoker.DataAccess.Models;
-using System;
 using System.Collections.Generic;
 
 namespace PointingPoker.Domain
@@ -9,10 +8,10 @@ namespace PointingPoker.Domain
         IEnumerable<User> GetUsers();
         bool CreateUser(User user);
         User GetUserByUsername(string username);
-        User GetUserById(Guid id);
-        bool UpdateUserInfo(Guid id, string username, string email);
-        bool UpdatePassword(Guid id, string newPassword);
+        User GetUserById(int id);
+        bool UpdateUserInfo(int id, string username, string email);
+        bool UpdatePassword(int id, string newPassword);
 
-        IEnumerable<string> GetUserNamesByTeam(Guid teamId);
+        IEnumerable<string> GetUserNamesByTeam(int teamId);
     }
 }

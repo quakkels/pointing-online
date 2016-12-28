@@ -18,7 +18,7 @@ namespace PointingPoker.Tests
         {
             _profileViewModel = new ProfileViewModel
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 UserName = "username",
                 Email = "email",
                 Password = "password",
@@ -77,7 +77,7 @@ namespace PointingPoker.Tests
                 Times.Once);
             _userServiceMock.Verify(
                 x => x.UpdatePassword(
-                    It.IsAny<Guid>(),
+                    It.IsAny<int>(),
                     It.IsAny<string>()),
                 Times.Never);
         }
@@ -122,7 +122,7 @@ namespace PointingPoker.Tests
             var result = controller.SignIn(new SignInViewModel { UserName = "user", Password = "bad" });
 
             // assert
-            _securityServiceMock.Verify(x => x.SignIn(It.IsAny<Guid>()), Times.Never);
+            _securityServiceMock.Verify(x => x.SignIn(It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace PointingPoker.Tests
             var result = controller.SignIn(new SignInViewModel { UserName = "user", Password = "match" });
 
             // assert
-            _securityServiceMock.Verify(x => x.SignIn(It.IsAny<Guid>()), Times.Once);
+            _securityServiceMock.Verify(x => x.SignIn(It.IsAny<int>()), Times.Once);
         }
     }
 }

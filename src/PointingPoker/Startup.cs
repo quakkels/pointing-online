@@ -17,8 +17,17 @@ namespace PointingPoker
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true);
-            builder.AddEnvironmentVariables();
+                .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddJsonFile("appsettings.json", false, true);
+            }
+            else
+            {
+                builder.AddJsonFile("appsettings.Production.json", false, true);
+            }
+
             Configuration = builder.Build();
         }
 
@@ -48,6 +57,7 @@ namespace PointingPoker
             });
 
             app.UseStaticFiles();
+            app.UseStatusCodePages();
 
             app.UseMvc(routes =>
             {

@@ -21,32 +21,21 @@ namespace PointingPoker.Tests
         {
             _team = new Team
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = "Name",
-                CreatedBy = Guid.NewGuid()
+                CreatedBy = 1
             };
 
             _teamCommands = new Mock<ITeamCommands>();
+            _teamCommands
+                .Setup(x => x.CreateTeam(It.IsAny<Team>(), It.IsAny<IEnumerable<string>>()))
+                .Returns(1);
 
             _teamQueries = new Mock<ITeamQueries>();
 
             _service = new TeamService(_teamCommands.Object, _teamQueries.Object);
         }
-
-        [Fact]
-        public void WillNotAddWhenMissingId()
-        {
-            // arrange
-            SetUp();
-            _team.Id = Guid.Empty;
-
-            // act
-            var result = _service.CreateTeam(_team, _memberEmails);
-
-            //
-            Assert.False(result);
-        }
-
+        
         [Fact]
         public void WillNotAddWhenMissingName()
         {
@@ -69,7 +58,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
-            _team.CreatedBy = Guid.Empty;
+            _team.CreatedBy = 0;
 
             // act
             var result = _service.CreateTeam(_team, _memberEmails);
@@ -84,6 +73,7 @@ namespace PointingPoker.Tests
             // arrange
             SetUp();
             _memberEmails = null;
+            _team.Id = 0;
 
             // act
             var result = _service.CreateTeam(_team, _memberEmails);
@@ -94,6 +84,7 @@ namespace PointingPoker.Tests
                     It.IsAny<Team>(), 
                     It.IsNotNull<IEnumerable<string>>()), 
                 Times.Once);
+            Assert.NotEqual(0, _team.Id);
             Assert.True(result);
         }
 
@@ -102,10 +93,14 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
+            _team.Id = 0;
             _memberEmails = new List<string> { "email1", "eamil2" };
 
             // act
             _service.CreateTeam(_team, _memberEmails);
+
+            // assert
+            Assert.Equal(1, _team.Id);
         }
     }
 }

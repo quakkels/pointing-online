@@ -12,15 +12,29 @@ namespace PointingPoker.DataAccess.Commands
             _connectionProvider = connectionProvider;
         }
 
-        public void CreateCard(Card card)
+        public int CreateCard(Card card)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var command = 
+                var command =
                     @"insert into Cards 
-                    (Id, Description, CreatedBy, IsPointingClosed, TeamId)
-                    values (@Id, @Description, @CreatedBy, @IsPointingClosed, @TeamId)";
-                conn.Execute(command, card);
+                    (Description, CreatedBy, ClosedBy, TeamId)
+                    values (@Description, @CreatedBy, @ClosedBy, @TeamId)
+                    select scope_identity()";
+                var id = conn.ExecuteScalar<int>(command, card);
+                return id;
+            }
+        }
+
+        public void ClosePointing(int cardId, int userId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var command =
+                    @"update Cards
+                    set ClosedBy = @userId
+                    where Id = @cardId";
+                conn.Execute(command, new { cardId, userId });
             }
         }
     }

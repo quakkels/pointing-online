@@ -4,6 +4,8 @@ namespace PointingPoker.DataAccess.Commands
 {
     public interface ICardCommands
     {
-        void CreateCard(Card card);
+        int CreateCard(Card card);
+
+        void ClosePointing(int cardId, int userId);
     }
 }

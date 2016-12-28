@@ -13,7 +13,7 @@ namespace PointingPoker.Controllers
     {
         private readonly ISecurityService _securityService;
         private readonly IUserService _userService;
-        private Guid _currentUserId;
+        private int _currentUserId;
 
         public UserController(
             ISecurityService securityService,

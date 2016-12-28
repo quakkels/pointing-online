@@ -14,30 +14,36 @@ namespace PointingPoker.DataAccess.Commands
             _connectionProvider = connectionProvider;
         }
 
-        public void CreateTeam(Team team, IEnumerable<string> memberEmails)
+        public int CreateTeam(Team team, IEnumerable<string> memberEmails)
         {
-            var teamCommand = @"
-                insert into Teams values (@id, @Name, @CreatedBy)
-                insert into TeamMembers values (@id, @CreatedBy)";
-
-            var teamMemberCommand = @"
-                insert into TeamMembers(TeamId, UserId)
-                select @TeamId,	Id from Users 
-                where email = @email and not exists (
-	                select 1 from TeamMembers tm where tm.UserId = Id)";
-
-            var teamMembers = memberEmails.Select(
-                email => new
-                {
-                    TeamId = team.Id,
-                    UserId = team.CreatedBy,
-                    Email = email
-                });
 
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                conn.Execute(teamCommand, team);
-                conn.Execute(teamMemberCommand, teamMembers);
+                var teamId = conn.ExecuteScalar<int>(
+                    @"
+                        insert into Teams values (@Name, @CreatedBy)
+                        declare @teamId int = scope_identity();
+                        insert into TeamMembers values (@teamId, @CreatedBy)
+                        select @teamId", 
+                    team);
+
+                var teamMembers = memberEmails
+                    .Select(email => new
+                    {
+                        TeamId = teamId,
+                        UserId = team.CreatedBy,
+                        Email = email
+                    });
+
+                conn.Execute(
+                    @"
+                        insert into TeamMembers(TeamId, UserId)
+                        select @TeamId,	Id from Users 
+                        where email = @email and not exists (
+	                    select 1 from TeamMembers tm where tm.UserId = Id)", 
+                    teamMembers);
+
+                return teamId;
             }
         }
     }

@@ -6,9 +6,11 @@ namespace PointingPoker.Domain
 {
     public interface ICardService
     {
-        bool CreateCard(Card card);
-        IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId);
-        IEnumerable<Card> GetOpenCardsForTeam(Guid teamId);
-        Card GetCard(Guid cardId);
+        int CreateCard(Card card);
+        IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId);
+        IEnumerable<Card> GetOpenCardsForTeam(int teamId);
+        Card GetCard(int cardId);
+        bool ClosePointing(int cardId, int userId);
+        IEnumerable<Card> GetClosedCardsForTeam(int teamId, int userId);
     }
 }

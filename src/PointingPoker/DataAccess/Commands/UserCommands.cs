@@ -16,12 +16,12 @@ namespace PointingPoker.DataAccess.Commands
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
-                var command = "insert into dbo.Users values(@Id, @Username, @Email, @PasswordHash)";
+                var command = "insert into dbo.Users (Username, Email, PasswordHash) values(@Username, @Email, @PasswordHash)";
                 conn.Execute(command, user);
             }
         }
 
-        public void UpdateUserInfo(Guid id, string username, string email)
+        public void UpdateUserInfo(int id, string username, string email)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
@@ -37,7 +37,7 @@ namespace PointingPoker.DataAccess.Commands
             }
         }
 
-        public void UpdatePassword(Guid id, string passwordHash)
+        public void UpdatePassword(int id, string passwordHash)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

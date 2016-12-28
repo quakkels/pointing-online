@@ -42,7 +42,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public bool DoesUserNameExist(Guid currentId, string userName)
+        public bool DoesUserNameExist(int currentId, string userName)
         {
             var query = @"
                 select 
@@ -80,7 +80,7 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public User GetUserById(Guid id)
+        public User GetUserById(int id)
         {
             var query = @"
                 select top 1
@@ -112,7 +112,7 @@ namespace PointingPoker.DataAccess.Queries
                 return passwordHash.FirstOrDefault();
             }
         }
-        public IEnumerable<string> GetUserNamesByTeam(Guid teamId)
+        public IEnumerable<string> GetUserNamesByTeam(int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {

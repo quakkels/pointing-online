@@ -5,6 +5,6 @@ namespace PointingPoker.DataAccess.Commands
 {
     public interface ITeamCommands
     {
-        void CreateTeam(Team team, IEnumerable<string> memberEmails);
+        int CreateTeam(Team team, IEnumerable<string> memberEmails);
     }
 }

@@ -11,6 +11,7 @@ namespace PointingPoker.Tests
     public class PointServiceTests
     {
         private Mock<IPointCommands> _pointCommandsMock;
+        private Mock<IPointQueries> _pointQueriesMock;
         private Mock<ICardQueries> _cardQueriesMock;
 
         private Point _point;
@@ -21,34 +22,21 @@ namespace PointingPoker.Tests
         {
             _cardQueriesMock = new Mock<ICardQueries>();
             _pointCommandsMock = new Mock<IPointCommands>();
+            _pointQueriesMock = new Mock<IPointQueries>();
             
             service = new PointService(
                 _pointCommandsMock.Object,
+                _pointQueriesMock.Object,
                 _cardQueriesMock.Object);
 
             _point = new Point
             {
-                Id = Guid.NewGuid(),
-                PointedBy = Guid.NewGuid(),
-                CardId = Guid.NewGuid(),
+                Id = 1,
+                PointedBy = 1,
+                CardId = 1,
                 Points = 1,
                 DateCreated = DateTime.Now
             };
-        }
-
-        [Fact]
-        public void CannotCreatePointWhenPointIdIsEmpty()
-        {
-            // arrange
-            SetUp();
-            _point.Id = Guid.Empty;
-
-            // act
-            var result = service.PointCard(_point);
-
-            // assert
-            Assert.False(result);
-            _pointCommandsMock.Verify(x => x.CreatePoint(It.IsAny<Point>()), Times.Never);
         }
 
         [Fact]
@@ -56,7 +44,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
-            _point.CardId = Guid.Empty;
+            _point.CardId = 0;
 
             // act
             var result = service.PointCard(_point);
@@ -71,7 +59,7 @@ namespace PointingPoker.Tests
         {
             // arrange
             SetUp();
-            _point.PointedBy = Guid.Empty;
+            _point.PointedBy = 0;
 
             // act
             var result = service.PointCard(_point);
@@ -90,7 +78,7 @@ namespace PointingPoker.Tests
             // arrange
             SetUp();
             _cardQueriesMock
-                .Setup(x => x.IsCardClosedForPointing(It.IsAny<Guid>()))
+                .Setup(x => x.IsCardClosedForPointing(It.IsAny<int>()))
                 .Returns(true);
 
             // act

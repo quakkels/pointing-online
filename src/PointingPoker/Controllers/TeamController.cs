@@ -15,7 +15,7 @@ namespace PointingPoker.Controllers
         private readonly ICardService _cardService;
         private readonly IUserService _userService;
 
-        private Guid _currentUserId;
+        private int _currentUserId;
 
         public TeamController(
             ITeamService teamService, 
@@ -46,7 +46,7 @@ namespace PointingPoker.Controllers
 
             var team = new Team
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = model.Name,
                 CreatedBy = _currentUserId
             };
@@ -58,7 +58,7 @@ namespace PointingPoker.Controllers
             return RedirectToAction("Summary", "Team", new { id = team.Id });
         }
 
-        public ViewResult Summary(Guid id)
+        public ViewResult Summary(int id)
         {
             var model = new TeamSummaryViewModel
             {
@@ -66,7 +66,8 @@ namespace PointingPoker.Controllers
                 CardsToPoint = _cardService.GetCardsToPointForTeam(_currentUserId, id),
                 PointedCards = _cardService.GetOpenCardsForTeam(id),
                 TeamUserNames = _userService.GetUserNamesByTeam(id),
-                Teams = _teamService.GetTeamsByUser(_currentUserId)
+                Teams = _teamService.GetTeamsByUser(_currentUserId),
+                ClosedCards = _cardService.GetClosedCardsForTeam(id, _currentUserId)
             };
 
             return View(model);

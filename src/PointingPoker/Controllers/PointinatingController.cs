@@ -10,7 +10,7 @@ namespace PointingPoker.Controllers
     [Authorize]
     public class PointinatingController : Controller
     {
-        private Guid _currentUserId;
+        private int _currentUserId;
         private readonly ICardService _cardService;
         private readonly ITeamService _teamService;
         private readonly IPointService _pointService;
@@ -37,7 +37,7 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
-        public ViewResult Card(Guid id)
+        public ViewResult Card(int id)
         {
             var model = new CardViewModel
             {
@@ -48,7 +48,7 @@ namespace PointingPoker.Controllers
         }
 
         [HttpPost]
-        public ViewResult Card(CardViewModel model)
+        public ActionResult Card(CardViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -57,27 +57,27 @@ namespace PointingPoker.Controllers
 
             var card = new Card
             {
-                Id = Guid.NewGuid(),
                 Description = model.Description,
                 CreatedBy = model.CreatedBy,
-                IsPointingClosed = model.IsPointingClosed,
+                ClosedBy = model.ClosedBy,
                 TeamId = model.TeamId
             };
 
-            if (!_cardService.CreateCard(card))
+            if (_cardService.CreateCard(card) == 0)
             {
                 ModelState.AddModelError("Description", "Could not create this card.");
                 return View(model);
             }
 
-            return View(model);
+            return RedirectToAction("Summary", "Team", new { id =  card.TeamId});
         }
 
-        public ViewResult Point(Guid id)
+        public ViewResult Point(int id)
         {
             var model = new PointViewModel
             {
-                Card = _cardService.GetCard(id)
+                Card = _cardService.GetCard(id),
+                PointValue = _pointService.GetCardPoint(id, _currentUserId)
             };
 
             return View(model);
@@ -95,7 +95,6 @@ namespace PointingPoker.Controllers
 
             var point = new Point
             {
-                Id = Guid.NewGuid(),
                 PointedBy = _currentUserId,
                 CardId = model.Card.Id,
                 Points = model.PointValue
@@ -108,6 +107,20 @@ namespace PointingPoker.Controllers
             }
 
             return RedirectToAction("Summary", "Team", new { id = model.Card.TeamId });
+        }
+
+        public ViewResult Close(int id)
+        {
+            var card = _cardService.GetCard(id);
+            return View(card);
+        }
+
+        [HttpPost]
+        public ActionResult ClosePointing(int id)
+        {
+            var card = _cardService.GetCard(id);
+            _cardService.ClosePointing(id, _currentUserId);
+            return RedirectToAction("Summary", "Team", new { id = card.TeamId });
         }
     }
 }

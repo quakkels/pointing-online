@@ -1,8 +1,8 @@
 ﻿using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PointingPoker.Domain
 {
@@ -10,46 +10,73 @@ namespace PointingPoker.Domain
     {
         private readonly ICardCommands _cardCommands;
         private readonly ICardQueries _cardQueries;
+        private readonly ITeamQueries _teamQueries;
 
-        public CardService(ICardCommands cardCommands, ICardQueries cardQueries)
+        public CardService(
+            ICardCommands cardCommands, 
+            ICardQueries cardQueries,
+            ITeamQueries teamQueries)
         {
             _cardCommands = cardCommands;
             _cardQueries = cardQueries;
+            _teamQueries = teamQueries;
         }
 
-        public bool CreateCard(Card card)
+        public int CreateCard(Card card)
         {
             if (
-                card.Id == Guid.Empty
-                || card.CreatedBy == Guid.Empty
-                || string.IsNullOrEmpty(card.Description)
-                || card.TeamId == Guid.Empty)
+                string.IsNullOrEmpty(card.Description)
+                || card.TeamId == 0)
             {
-                return false;
+                return 0;
             }
 
             if (!_cardQueries.DoesCardCreatorExist(card.CreatedBy))
             {
-                return false;
+                return 0;
             }
 
-            _cardCommands.CreateCard(card);
-            return true;
+            var id = _cardCommands.CreateCard(card);
+            card.Id = id;
+            return id;
         }
 
-        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId)
+        public IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId)
         {
             return _cardQueries.GetCardsToPointForTeam(userId, teamId);
         }
 
-        public IEnumerable<Card> GetOpenCardsForTeam(Guid teamId)
+        public IEnumerable<Card> GetOpenCardsForTeam(int teamId)
         {
             return _cardQueries.GetOpenCardsForTeam(teamId);
         }
 
-        public Card GetCard(Guid cardId)
+        public Card GetCard(int cardId)
         {
             return _cardQueries.GetCard(cardId);
+        }
+
+        public bool ClosePointing(int cardId, int userId)
+        {
+            if (cardId < 1 || userId < 1)
+            {
+                return false;
+            }
+
+            _cardCommands.ClosePointing(cardId, userId);
+            return true;
+        }
+
+        public IEnumerable<Card> GetClosedCardsForTeam(int teamId, int userId)
+        {
+            var teamsForUser = _teamQueries.GetTeamsByUser(userId);
+
+            if (teamsForUser.All(x => x.Id != teamId))
+            {
+                return new List<Card>();
+            }
+            
+            return _cardQueries.GetClosedCardsForTeam(teamId);
         }
     }
 }

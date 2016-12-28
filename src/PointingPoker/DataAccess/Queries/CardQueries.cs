@@ -15,7 +15,7 @@ namespace PointingPoker.DataAccess.Queries
             _connectionProvider = connectionProvider;
         }
             
-        public bool DoesCardCreatorExist(Guid creatorId)
+        public bool DoesCardCreatorExist(int creatorId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
@@ -30,27 +30,28 @@ namespace PointingPoker.DataAccess.Queries
 	                else cast(0 as bit)
                     end as [exists]";
 
-                var exists = conn.Query<bool>(query, new { creatorId });
-                return exists.FirstOrDefault();
+                var exists = conn.QueryFirst<bool>(query, new { creatorId });
+                return exists;
 
             }
         }
 
-        public IEnumerable<Card> GetCardsToPointByUser(Guid userId)
+        public IEnumerable<Card> GetCardsToPointByUser(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Card> GetCardsToPointForTeam(Guid userId, Guid teamId)
+        public IEnumerable<Card> GetCardsToPointForTeam(int userId, int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var cards = conn.Query<Card>(
-                    @"select [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    @"select [Id], [Description], [CreatedBy], [ClosedBy], [TeamId], [DateCreated]
                     from Cards
                     where 
 	                    not exists (select 1 from Points where Points.PointedBy = @userId and Points.CardId = Cards.Id)
 	                    and Cards.TeamId = @teamId
+                        and (Cards.ClosedBy is null or Cards.ClosedBy = 0)
                     order by DateCreated",
                     new { userId, teamId });
 
@@ -58,15 +59,15 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public IEnumerable<Card> GetOpenCardsForTeam(Guid teamId)
+        public IEnumerable<Card> GetOpenCardsForTeam(int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var cards = conn.Query<Card>(
-                    @"select [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    @"select [Id], [Description], [CreatedBy], [ClosedBy], [TeamId], [DateCreated]
                     from Cards
                     where
-	                    IsPointingClosed = 0
+	                    ClosedBy is null
 	                    and Cards.TeamId = @teamId
                     order by DateCreated",
                     new { teamId });
@@ -75,12 +76,12 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public Card GetCard(Guid cardId)
+        public Card GetCard(int cardId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var card = conn.QueryFirstOrDefault<Card>(
-                    @"select top 1 [Id], [Description], [CreatedBy], [IsPointingClosed], [TeamId], [DateCreated]
+                    @"select top 1 [Id], [Description], [CreatedBy], [ClosedBy], [TeamId], [DateCreated]
                     from Cards
                     where [Id] = @cardId",
                     new { cardId });
@@ -89,15 +90,34 @@ namespace PointingPoker.DataAccess.Queries
             }
         }
 
-        public bool IsCardClosedForPointing(Guid cardId)
+        public bool IsCardClosedForPointing(int cardId)
         {
             using ( var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var result = conn.QueryFirstOrDefault<bool>(
-                    @"select top 1 [IsPointingClosed]
+                    @"select top 1 
+	                    case when ClosedBy is null 
+	                    then 'False'
+	                    else 'True '
+	                    end
                     from Cards
                     where Id = @cardId",
                     new { cardId });
+
+                return result;
+            }
+        }
+
+        public IEnumerable<Card> GetClosedCardsForTeam(int teamId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var result = conn.Query<Card>(
+                    @"select ClosedBy, CreatedBy, DateCreated, [Description], Id, TeamId
+                    from Cards
+                    where TeamId = @teamId and ClosedBy <> 0 and ClosedBy is not null
+                    order by DateCreated", 
+                    new { teamId });
 
                 return result;
             }

@@ -9,20 +9,23 @@ namespace PointingPoker.Domain
     {
         private readonly IPointCommands _pointCommands;
         private readonly ICardQueries _cardQueries;
+        private readonly IPointQueries _pointQueries;
 
         public PointService(
             IPointCommands pointCommands,
+            IPointQueries pointQueries,
             ICardQueries cardQueries)
         {
             _pointCommands = pointCommands;
+            _pointQueries = pointQueries;
             _cardQueries = cardQueries;
         }
 
         public bool PointCard(Point point)
         {
-            if (point.Id == Guid.Empty
-                || point.CardId == Guid.Empty
-                || point.PointedBy == Guid.Empty)
+            if (
+                point.CardId == 0
+                || point.PointedBy == 0)
             {
                 return false;
             }
@@ -35,8 +38,14 @@ namespace PointingPoker.Domain
                 return false;
             }
 
-            _pointCommands.CreatePoint(point);
+            var id = _pointCommands.CreatePoint(point);
+            point.Id = id;
             return true;
+        }
+
+        public int GetCardPoint(int cardId, int userId)
+        {
+            return _pointQueries.GetCardPoints(cardId, userId);
         }
     }
 }

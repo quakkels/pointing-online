@@ -8,10 +8,10 @@ namespace PointingPoker.DataAccess.Queries
     {
         IEnumerable<User> GetUsers();
         bool DoesUsernameExist(string userName);
-        bool DoesUserNameExist(Guid currentId, string userName);
+        bool DoesUserNameExist(int currentId, string userName);
         User GetUserByUserName(string userName);
-        User GetUserById(Guid id);
+        User GetUserById(int id);
         string GetPasswordHashByUserName(string userName);
-        IEnumerable<string> GetUserNamesByTeam(Guid teamId);
+        IEnumerable<string> GetUserNamesByTeam(int teamId);
     }
 }

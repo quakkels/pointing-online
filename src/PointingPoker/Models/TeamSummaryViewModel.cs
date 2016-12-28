@@ -11,5 +11,6 @@ namespace PointingPoker.Models
         public IEnumerable<Team> Teams { get; set; }
         public IEnumerable<Card> CardsToPoint { get; set; }
         public IEnumerable<Card> PointedCards { get; set; }
+        public IEnumerable<Card> ClosedCards { get; set; }
     }
 }
