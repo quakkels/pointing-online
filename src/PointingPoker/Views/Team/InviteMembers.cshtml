@@ -1,0 +1,15 @@
+﻿@model PointingPoker.Models.InviteTeamMembersViewModel
+
+<h1>Invite Site Users to Team</h1>
+<form method="post">
+    @Html.HiddenFor(x => x.TeamId)
+    <p>
+        @Html.LabelFor(x => x.InvitedEmails, "Emails to Invite")
+        @Html.TextBoxFor(x => x.InvitedEmails)
+        @Html.ValidationMessageFor(x => x.InvitedEmails)
+        (Use spaces to separate multiple emails.)
+    </p>
+    <p>
+        <button type="submit">Invite</button>
+    </p>
+</form>
