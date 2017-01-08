@@ -72,5 +72,10 @@ namespace PointingPoker.Controllers
 
             return View(model);
         }
+
+        public ViewResult InviteMembers()
+        {
+            return null;
+        }
     }
 }
