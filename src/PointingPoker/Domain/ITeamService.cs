@@ -9,5 +9,6 @@ namespace PointingPoker.Domain
         IEnumerable<Team> GetTeamsByUser(int memberUserId);
         bool IsUserInTeam(int userId, int teamid);
         Team GetTeam(int teamId);
+        void AddMembersByEmail(int addedByUserId, int teamId, IEnumerable<string> invitedEmails);
     }
 }

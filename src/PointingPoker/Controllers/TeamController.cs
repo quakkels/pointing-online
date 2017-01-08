@@ -84,9 +84,16 @@ namespace PointingPoker.Controllers
         }
 
         [HttpPost]
-        public ViewResult InviteMembers(InviteTeamMembersViewModel model)
+        public ActionResult InviteMembers(InviteTeamMembersViewModel model)
         {
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            _teamService.AddMembersByEmail(_currentUserId, model.TeamId, model.GetParsedInvitedEmails);
+            
+            return RedirectToAction(nameof(Summary), new { id = model.TeamId });
         }
     }
 }
