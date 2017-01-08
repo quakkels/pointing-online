@@ -1,5 +1,4 @@
 ﻿using PointingPoker.DataAccess.Models;
-using System;
 using System.Collections.Generic;
 
 namespace PointingPoker.Domain
@@ -8,6 +7,7 @@ namespace PointingPoker.Domain
     {
         bool CreateTeam(Team team, IEnumerable<string> memberEmails);
         IEnumerable<Team> GetTeamsByUser(int memberUserId);
+        bool IsUserInTeam(int userId, int teamid);
         Team GetTeam(int teamId);
     }
 }
