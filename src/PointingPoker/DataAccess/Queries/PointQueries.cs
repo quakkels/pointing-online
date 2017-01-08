@@ -17,7 +17,8 @@ namespace PointingPoker.DataAccess.Queries
             using(var conn = _connectionProvider.GetOpenPointingPokerConnection())
             {
                 var points = conn.QueryFirstOrDefault<int>(
-                    @"select top 1 Points from Points where CardId = @cardId and PointedBy = @userId",
+                    @"select top 1 Points from Points where CardId = @cardId and PointedBy = @userId
+                    order by DateCreated desc",
                     new { cardId, userId });
 
                 return points;
