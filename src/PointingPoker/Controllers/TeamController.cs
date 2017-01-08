@@ -58,8 +58,13 @@ namespace PointingPoker.Controllers
             return RedirectToAction("Summary", "Team", new { id = team.Id });
         }
 
-        public ViewResult Summary(int id)
+        public ActionResult Summary(int id)
         {
+            if (!_teamService.IsUserInTeam(_currentUserId, id))
+            {
+                return Redirect("/");
+            }
+
             var model = new TeamSummaryViewModel
             {
                 Team = _teamService.GetTeam(id),
@@ -70,6 +75,17 @@ namespace PointingPoker.Controllers
                 ClosedCards = _cardService.GetClosedCardsForTeam(id, _currentUserId)
             };
 
+            return View(model);
+        }
+
+        public ViewResult InviteMembers(int id)
+        {            
+            return View(new InviteTeamMembersViewModel { TeamId = id });
+        }
+
+        [HttpPost]
+        public ViewResult InviteMembers(InviteTeamMembersViewModel model)
+        {
             return View(model);
         }
     }

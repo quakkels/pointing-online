@@ -102,5 +102,59 @@ namespace PointingPoker.Tests
             // assert
             Assert.Equal(1, _team.Id);
         }
+
+        [Fact]
+        public void KnowsWhenUserIsTeamMember()
+        {
+            // arrange
+            SetUp();
+            _teamQueries
+                .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
+                .Returns(new List<Team>
+                {
+                    new Team { Id = 123 }
+                });
+
+            // act
+            var result = _service.IsUserInTeam(1, 123);
+
+            // assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void KnowsWhenUserIsNotTeamMember()
+        {
+            // arrange
+            SetUp();
+            _teamQueries
+                .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
+                .Returns(new List<Team>
+                {
+                    new Team { Id = 123 }
+                });
+
+            // act
+            var result = _service.IsUserInTeam(1, 321);
+
+            // assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void DoesNotErrorWhenUserIsInNoTeams()
+        {
+            // arrange
+            SetUp();
+            _teamQueries
+                .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
+                .Returns((IEnumerable<Team>)null);
+
+            // act
+            var result = _service.IsUserInTeam(1, 321);
+
+            // assert
+            Assert.False(result);
+        }
     }
 }

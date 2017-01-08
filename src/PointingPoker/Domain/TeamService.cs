@@ -1,5 +1,4 @@
-﻿using System;
-using PointingPoker.DataAccess.Models;
+﻿using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Commands;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +46,18 @@ namespace PointingPoker.Domain
         {
             var teams = _teamQueries.GetTeamsByUser(memberUserId);
             return teams;
+        }
+
+        public bool IsUserInTeam(int userId, int teamid)
+        {
+            var teams = _teamQueries.GetTeamsByUser(userId);
+            if (teams == null)
+            {
+                return false;
+            }
+
+            var isMember = teams.Any(x => x.Id == teamid);
+            return isMember;
         }
 
         public Team GetTeam(int teamId)
