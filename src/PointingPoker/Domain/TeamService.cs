@@ -3,6 +3,7 @@ using PointingPoker.DataAccess.Commands;
 using System.Collections.Generic;
 using System.Linq;
 using PointingPoker.DataAccess.Queries;
+using System;
 
 namespace PointingPoker.Domain
 {
@@ -63,6 +64,16 @@ namespace PointingPoker.Domain
         public Team GetTeam(int teamId)
         {
             return _teamQueries.GetTeam(teamId);
+        }
+
+        public void AddMembersByEmail(int addedByUserId, int teamId, IEnumerable<string> invitedEmails)
+        {
+            if (!IsUserInTeam(addedByUserId, teamId))
+            {
+                return;
+            }
+
+            _teamCommands.AddUsersToTeam(teamId, invitedEmails);
         }
     }
 }
