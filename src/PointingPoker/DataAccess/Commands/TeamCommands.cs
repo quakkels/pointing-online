@@ -31,7 +31,6 @@ namespace PointingPoker.DataAccess.Commands
                     .Select(email => new
                     {
                         TeamId = teamId,
-                        UserId = team.CreatedBy,
                         Email = email
                     });
 
@@ -40,10 +39,31 @@ namespace PointingPoker.DataAccess.Commands
                         insert into TeamMembers(TeamId, UserId)
                         select @TeamId,	Id from Users 
                         where email = @email and not exists (
-	                    select 1 from TeamMembers tm where tm.UserId = Id)", 
+	                    select 1 from TeamMembers tm where tm.UserId = Id and tm.TeamId = @TeamId)", 
                     teamMembers);
 
                 return teamId;
+            }
+        }
+
+        public void AddUsersToTeam(int teamId, IEnumerable<string> userEmails)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var teamMembers = userEmails
+                    .Select(email => new
+                    {
+                        TeamId = teamId,
+                        Email = email
+                    });
+
+                conn.Execute(
+                    @"
+                        insert into TeamMembers(TeamId, UserId)
+                        select @TeamId,	Id from Users 
+                        where email = @email and not exists (
+	                    select 1 from TeamMembers tm where tm.UserId = Id and tm.TeamId = @TeamId)",
+                    teamMembers);
             }
         }
     }

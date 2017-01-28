@@ -78,8 +78,15 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
-        public ViewResult InviteMembers(int id)
-        {            
+        public ActionResult InviteMembers(int id)
+        {
+            if (id == 0)
+            {
+                var result = new ContentResult();
+                result.StatusCode = 404;
+                return result;
+            }
+
             return View(new InviteTeamMembersViewModel { TeamId = id });
         }
 

@@ -68,7 +68,12 @@ namespace PointingPoker.Domain
 
         public void AddMembersByEmail(int addedByUserId, int teamId, IEnumerable<string> invitedEmails)
         {
-            throw new NotImplementedException();
+            if (!IsUserInTeam(addedByUserId, teamId))
+            {
+                return;
+            }
+
+            _teamCommands.AddUsersToTeam(teamId, invitedEmails);
         }
     }
 }
