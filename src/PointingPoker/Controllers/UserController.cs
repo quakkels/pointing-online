@@ -4,7 +4,6 @@ using PointingPoker.DataAccess.Models;
 using PointingPoker.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using System;
 
 namespace PointingPoker.Controllers
 {
@@ -54,7 +53,16 @@ namespace PointingPoker.Controllers
                 return RedirectToAction(nameof(SignIn));
             }
 
-            ModelState.AddModelError("UserName", "This user name is taken.");
+            if (_userService.DoesEmailExist(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "This email address is taken.");
+            }
+
+            if (_userService.DoesUsernameExist(model.UserName))
+            {
+                ModelState.AddModelError(nameof(model.UserName), "This user name is taken.");
+            }
+
             return View(model);
         }
         
@@ -79,10 +87,14 @@ namespace PointingPoker.Controllers
                 model.UserName,
                 model.Email))
             {
-                ModelState
+                if (_userService.DoesEmailExist(model.Email))
+                {
+                    ModelState
                     .AddModelError(
-                    "Username", 
-                    "An error occurred while updating this profile information.");
+                    nameof(model.Email),
+                    "This email is not available.");
+                }
+                                
                 return View(model);
             }
 
@@ -92,7 +104,7 @@ namespace PointingPoker.Controllers
                 {
                     ModelState
                         .AddModelError(
-                        "Password", 
+                        nameof(model.Password), 
                         "An error occurred while updating the password.");
                     return View(model);
                 }
