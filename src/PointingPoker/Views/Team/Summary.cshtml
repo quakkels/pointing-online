@@ -45,7 +45,7 @@
                 @foreach (var card in Model.ClosedCards)
                 {
                     <li>
-                        <a href="@Url.Action("Point", "Pointinating", new { id = card.Id })">@card.Description</a>
+                        <a href="@Url.Action("CardScore", "Pointinating", new { id = card.Id })">@card.Description</a>
                         @if (card.ClosedBy == null)
                         {
                             <a href="@Url.Action("Close", "Pointinating", new { id = card.Id })"

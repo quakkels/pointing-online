@@ -1,7 +1,7 @@
-﻿using System;
-using PointingPoker.DataAccess.Models;
+﻿using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Queries;
+using System.Collections.Generic;
 
 namespace PointingPoker.Domain
 {
@@ -46,6 +46,11 @@ namespace PointingPoker.Domain
         public int GetCardPoint(int cardId, int userId)
         {
             return _pointQueries.GetCardPoints(cardId, userId);
+        }
+
+        public IEnumerable<CardScore> GetCardScore(int cardId)
+        {
+            return _pointQueries.GetCardPoints(cardId);
         }
     }
 }

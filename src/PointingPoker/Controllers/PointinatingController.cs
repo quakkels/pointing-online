@@ -122,5 +122,11 @@ namespace PointingPoker.Controllers
             _cardService.ClosePointing(id, _currentUserId);
             return RedirectToAction("Summary", "Team", new { id = card.TeamId });
         }
+
+        public ViewResult CardScore(int id)
+        {
+            var model = _pointService.GetCardScore(id);
+            return View(model);
+        }
     }
 }
