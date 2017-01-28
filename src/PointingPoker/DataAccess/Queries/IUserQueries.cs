@@ -13,5 +13,7 @@ namespace PointingPoker.DataAccess.Queries
         User GetUserById(int id);
         string GetPasswordHashByUserName(string userName);
         IEnumerable<string> GetUserNamesByTeam(int teamId);
+        bool DoesEmailExist(string userName);
+        bool DoesEmailExist(int currentUserId, string email);
     }
 }

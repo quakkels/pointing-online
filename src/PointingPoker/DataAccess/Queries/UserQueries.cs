@@ -112,6 +112,7 @@ namespace PointingPoker.DataAccess.Queries
                 return passwordHash.FirstOrDefault();
             }
         }
+
         public IEnumerable<string> GetUserNamesByTeam(int teamId)
         {
             using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
@@ -124,6 +125,47 @@ namespace PointingPoker.DataAccess.Queries
                     new { teamId });
 
                 return userNames;
+            }
+        }
+
+        public bool DoesEmailExist(string email)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var exists = conn.QueryFirstOrDefault<bool>(
+                    @"select 
+	                    case when
+                            exists(
+                                select 1
+                                from Users
+                                where
+                                    email = @email)
+                        then cast(1 as bit)
+	                    else cast(0 as bit)
+                    end as [exists]",
+                    new { email });
+                return exists;
+            }
+        }
+
+        public bool DoesEmailExist(int currentUserId, string email)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                var exists = conn.QueryFirstOrDefault<bool>(
+                    @"select 
+	                    case when
+                            exists(
+                                select 1
+                                from Users
+                                where
+                                    Email = @email
+                                    and Id <> @currentUserId)
+                        then cast(1 as bit)
+	                    else cast(0 as bit)
+                    end as [exists]",
+                    new { email, currentUserId });
+                return exists;
             }
         }
     }

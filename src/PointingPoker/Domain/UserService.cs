@@ -1,7 +1,6 @@
 ﻿using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
-using System;
 using System.Collections.Generic;
 
 namespace PointingPoker.Domain
@@ -39,6 +38,11 @@ namespace PointingPoker.Domain
                 return false;
             }
 
+            if (_userQueries.DoesEmailExist(user.Email))
+            {
+                return false;
+            }
+
             _userCommands.CreateUser(user);
             return true;
         }
@@ -54,6 +58,11 @@ namespace PointingPoker.Domain
             }
 
             if (_userQueries.DoesUserNameExist(id, username))
+            {
+                return false;
+            }
+
+            if (_userQueries.DoesEmailExist(id, email))
             {
                 return false;
             }
@@ -76,6 +85,16 @@ namespace PointingPoker.Domain
         public IEnumerable<string> GetUserNamesByTeam(int teamId)
         {
             return _userQueries.GetUserNamesByTeam(teamId);
+        }
+
+        public bool DoesUsernameExist(string username)
+        {
+            return _userQueries.DoesUsernameExist(username);
+        }
+
+        public bool DoesEmailExist(string email)
+        {
+            return _userQueries.DoesEmailExist(email);
         }
     }
 }

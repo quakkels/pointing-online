@@ -11,7 +11,8 @@ namespace PointingPoker.Domain
         User GetUserById(int id);
         bool UpdateUserInfo(int id, string username, string email);
         bool UpdatePassword(int id, string newPassword);
-
         IEnumerable<string> GetUserNamesByTeam(int teamId);
+        bool DoesUsernameExist(string username);
+        bool DoesEmailExist(string email);
     }
 }
