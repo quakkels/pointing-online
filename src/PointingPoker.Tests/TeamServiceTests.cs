@@ -3,7 +3,6 @@ using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
 using PointingPoker.Domain;
-using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -17,7 +16,7 @@ namespace PointingPoker.Tests
         private IEnumerable<string> _memberEmails;
         private TeamService _service;
         
-        private void SetUp()
+        public TeamServiceTests()
         {
             _team = new Team
             {
@@ -32,6 +31,9 @@ namespace PointingPoker.Tests
                 .Returns(1);
 
             _teamQueries = new Mock<ITeamQueries>();
+            _teamQueries
+                .Setup(x => x.GetTeamsByUser(1))
+                .Returns(new List<Team> { _team });
 
             _service = new TeamService(_teamCommands.Object, _teamQueries.Object);
         }
@@ -40,7 +42,6 @@ namespace PointingPoker.Tests
         public void WillNotAddWhenMissingName()
         {
             // arrange
-            SetUp();
             _team.Name = "";
 
             // act
@@ -57,7 +58,6 @@ namespace PointingPoker.Tests
         public void WillNotAddWhenMissingCreator()
         {
             // arrange
-            SetUp();
             _team.CreatedBy = 0;
 
             // act
@@ -71,7 +71,6 @@ namespace PointingPoker.Tests
         public void CanAddATeamWithoutMembers()
         {
             // arrange
-            SetUp();
             _memberEmails = null;
             _team.Id = 0;
 
@@ -92,7 +91,6 @@ namespace PointingPoker.Tests
         public void CanCreateTeamWithMembers()
         {
             // arrange
-            SetUp();
             _team.Id = 0;
             _memberEmails = new List<string> { "email1", "eamil2" };
 
@@ -107,7 +105,6 @@ namespace PointingPoker.Tests
         public void KnowsWhenUserIsTeamMember()
         {
             // arrange
-            SetUp();
             _teamQueries
                 .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
                 .Returns(new List<Team>
@@ -126,7 +123,6 @@ namespace PointingPoker.Tests
         public void KnowsWhenUserIsNotTeamMember()
         {
             // arrange
-            SetUp();
             _teamQueries
                 .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
                 .Returns(new List<Team>
@@ -145,7 +141,6 @@ namespace PointingPoker.Tests
         public void DoesNotErrorWhenUserIsInNoTeams()
         {
             // arrange
-            SetUp();
             _teamQueries
                 .Setup(x => x.GetTeamsByUser(It.IsAny<int>()))
                 .Returns((IEnumerable<Team>)null);
@@ -155,6 +150,37 @@ namespace PointingPoker.Tests
 
             // assert
             Assert.False(result);
+        }
+
+        [Fact]
+        public void CanAddTeamMembers()
+        {
+            // arrange
+            var emails = new[] { "email", "email2" };
+            var adder = 1;
+
+            // act
+            _service.AddMembersByEmail(adder, _team.Id, emails);
+
+            // assert
+            _teamCommands.Verify(x => x.AddUsersToTeam(_team.Id, emails), Times.Once);
+        }
+
+        [Fact]
+        public void WillNotAddTeamMembersWhenAdderIsNotOnTeam()
+        {
+            // arrange
+            var emails = new[] { "email" };
+            var adder = 123;
+            _teamQueries
+                .Setup(x => x.GetTeamsByUser(adder))
+                .Returns((List<Team>)null);
+
+            // act
+            _service.AddMembersByEmail(adder, _team.Id, emails);
+
+            // assert
+            _teamCommands.Verify(x => x.AddUsersToTeam(It.IsAny<int>(), emails), Times.Never);
         }
     }
 }

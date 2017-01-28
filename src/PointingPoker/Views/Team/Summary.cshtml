@@ -59,7 +59,9 @@
     </section>
     <section class="column1-3">
         <div class="column-padding-left">
-            <h3>Team Members</h3>
+            <div class="headline group">
+                <h3 style="float:left">Team Members</h3><a style="float:right" href="@Url.Action("InviteMembers", new { id = Model.Team.Id })">Add Members</a>
+            </div>
             <ul>
                 @foreach (var user in Model.TeamUserNames)
                 {

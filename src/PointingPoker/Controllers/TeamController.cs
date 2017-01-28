@@ -78,15 +78,29 @@ namespace PointingPoker.Controllers
             return View(model);
         }
 
-        public ViewResult InviteMembers(int id)
-        {            
+        public ActionResult InviteMembers(int id)
+        {
+            if (id == 0)
+            {
+                var result = new ContentResult();
+                result.StatusCode = 404;
+                return result;
+            }
+
             return View(new InviteTeamMembersViewModel { TeamId = id });
         }
 
         [HttpPost]
-        public ViewResult InviteMembers(InviteTeamMembersViewModel model)
+        public ActionResult InviteMembers(InviteTeamMembersViewModel model)
         {
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            _teamService.AddMembersByEmail(_currentUserId, model.TeamId, model.GetParsedInvitedEmails);
+            
+            return RedirectToAction(nameof(Summary), new { id = model.TeamId });
         }
     }
 }
