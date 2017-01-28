@@ -3,7 +3,6 @@ using PointingPoker.Controllers;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.Domain;
 using PointingPoker.Models;
-using System;
 using Xunit;
 namespace PointingPoker.Tests
 {
@@ -14,7 +13,7 @@ namespace PointingPoker.Tests
         private ProfileViewModel _profileViewModel;
         private User _user;
 
-        private void Setup()
+        public UserControllerTests()
         {
             _profileViewModel = new ProfileViewModel
             {
@@ -58,7 +57,6 @@ namespace PointingPoker.Tests
         public void CanPostNewProfileInfoWithoutUpdatingPassword()
         {
             // arrange
-            Setup();
             _profileViewModel.Password = null;
             var controller = new UserController(
                 _securityServiceMock.Object,
@@ -86,7 +84,6 @@ namespace PointingPoker.Tests
         public void CanUpdatePasswordAndProfileInfo()
         {
             // arrange
-            Setup();
             var controller = new UserController(
                 _securityServiceMock.Object,
                 _userServiceMock.Object);
@@ -113,7 +110,6 @@ namespace PointingPoker.Tests
         public void WillNotSignInWithBadCredentials()
         {
             // arrange
-            Setup();
             var controller = new UserController(
                 _securityServiceMock.Object,
                 _userServiceMock.Object);
@@ -129,7 +125,6 @@ namespace PointingPoker.Tests
         public void WillSignInWithGoodCredentials()
         {
             // arrange
-            Setup();
             var controller = new UserController(
                 _securityServiceMock.Object,
                 _userServiceMock.Object);

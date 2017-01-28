@@ -19,6 +19,7 @@ namespace PointingPoker.Models
         public string Password { get; set; }
 
         [Compare("Password")]
+        [Display(Name = "Verify Password")]
         public string VerifyPassword { get; set; }
     }
 }

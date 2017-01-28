@@ -3,7 +3,6 @@ using PointingPoker.Domain;
 using PointingPoker.DataAccess.Commands;
 using PointingPoker.DataAccess.Models;
 using PointingPoker.DataAccess.Queries;
-using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -15,7 +14,7 @@ namespace PointingPoker.Tests
         private Mock<IUserCommands> _userCommandsMock;
         private User _user;
 
-        private void Setup()
+        public UserServiceTests()
         {
             _user = new User
             {
@@ -43,8 +42,7 @@ namespace PointingPoker.Tests
         [Fact]
         public void CanGetUsers()
         {
-            // arrange
-            Setup();
+            // arrang
             var userService = new UserService(_userQueriesMock.Object, _userCommandsMock.Object);
 
             // act
@@ -55,10 +53,9 @@ namespace PointingPoker.Tests
         }
 
         [Fact]
-        public void CanAddUserWhenUsernameIsNew()
+        public void CanAddUser()
         {
             // arrange
-            Setup();
             _userQueriesMock.Setup(x => x.DoesUsernameExist(It.IsAny<string>())).Returns(false);
             var userService = new UserService(_userQueriesMock.Object, _userCommandsMock.Object);
 
@@ -73,8 +70,21 @@ namespace PointingPoker.Tests
         public void CanNotAddUserWhenUsernameIsNotNew()
         {
             // arrange
-            Setup();
             _userQueriesMock.Setup(x => x.DoesUsernameExist(It.IsAny<string>())).Returns(true);
+            var userService = new UserService(_userQueriesMock.Object, _userCommandsMock.Object);
+
+            // act
+            var result = userService.CreateUser(new User());
+
+            // assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void CanNotAddUserWhenEmailExists()
+        {
+            // arrange
+            _userQueriesMock.Setup(x => x.DoesEmailExist(It.IsAny<string>())).Returns(true);
             var userService = new UserService(_userQueriesMock.Object, _userCommandsMock.Object);
 
             // act
@@ -88,7 +98,6 @@ namespace PointingPoker.Tests
         public void CanGetUser()
         {
             // arrange
-            Setup();
             _userQueriesMock
                 .Setup(x => x.GetUserByUserName(It.IsAny<string>()))
                 .Returns(_user);
@@ -107,7 +116,6 @@ namespace PointingPoker.Tests
         public void WillNotUpdateUserInfoWithoutId()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
@@ -123,7 +131,6 @@ namespace PointingPoker.Tests
         public void WillNotUpdateUserInfoWithoutEmail()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
@@ -138,10 +145,27 @@ namespace PointingPoker.Tests
         }
 
         [Fact]
+        public void WillNotUpdateUserInfoWithDuplicateEmail()
+        {
+            // arrange
+            _userQueriesMock
+                .Setup(x => x.DoesEmailExist(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(true);
+            var service = new UserService(
+                _userQueriesMock.Object,
+                _userCommandsMock.Object);
+
+            // act
+            var result = service.UpdateUserInfo(1, "username", "duplicate");
+
+            // assert
+            Assert.False(result);
+        }
+
+        [Fact]
         public void WillNotUpdateUserInfoWithoutUsername()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
@@ -159,7 +183,6 @@ namespace PointingPoker.Tests
         public void WillNotUpdateUserInfoWithDuplicateUsername()
         {
             // arrange
-            Setup();
             _userQueriesMock
                 .Setup(x => x.DoesUserNameExist(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(true);
@@ -178,7 +201,6 @@ namespace PointingPoker.Tests
         public void CanUpdateUserInfo()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
@@ -199,7 +221,6 @@ namespace PointingPoker.Tests
         public void WillNotUpdatePasswordWithoutId()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
@@ -215,7 +236,6 @@ namespace PointingPoker.Tests
         public void WillNotUpdatePasswordWithoutPassword()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
@@ -233,7 +253,6 @@ namespace PointingPoker.Tests
         public void CanUpdatePassword()
         {
             // arrange
-            Setup();
             var service = new UserService(
                 _userQueriesMock.Object,
                 _userCommandsMock.Object);
