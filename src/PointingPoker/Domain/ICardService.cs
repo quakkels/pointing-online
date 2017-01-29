@@ -12,5 +12,6 @@ namespace PointingPoker.Domain
         Card GetCard(int cardId);
         bool ClosePointing(int cardId, int userId);
         IEnumerable<Card> GetClosedCardsForTeam(int teamId, int userId);
+        void OpenPointing(int openId, int cardId);
     }
 }

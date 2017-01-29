@@ -1,0 +1,20 @@
+﻿@model PointingPoker.Models.CardScoreViewModel
+
+<h1>Score for: @Model.Card.Description</h1>
+<table>
+    <tr>
+        <th>Pointed By</th>
+        <th>Points</th>
+    </tr>
+@foreach (var score in Model.CardScores)
+{
+    <tr>
+        <td>@score.UserName</td>
+        <td>@score.Points</td>
+    </tr>
+}
+</table>
+
+<p>
+    <a href="@Url.Action("Reopen", new { id = Model.Card.Id })">Reopen Pointing</a>
+</p>

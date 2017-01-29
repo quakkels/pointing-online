@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System;
+using Dapper;
 using PointingPoker.DataAccess.Models;
 
 namespace PointingPoker.DataAccess.Commands
@@ -35,6 +36,18 @@ namespace PointingPoker.DataAccess.Commands
                     set ClosedBy = @userId
                     where Id = @cardId";
                 conn.Execute(command, new { cardId, userId });
+            }
+        }
+
+        public void OpenPointing(int cardId)
+        {
+            using (var conn = _connectionProvider.GetOpenPointingPokerConnection())
+            {
+                conn.Execute(
+                    @"update Cards
+                    set ClosedBy = null
+                    where Id = @cardId", 
+                    new { cardId });
             }
         }
     }
