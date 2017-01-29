@@ -78,5 +78,22 @@ namespace PointingPoker.Domain
             
             return _cardQueries.GetClosedCardsForTeam(teamId);
         }
+
+        public void OpenPointing(int openBy, int cardId)
+        {
+            var card = _cardQueries.GetCard(cardId);
+            if (card == null)
+            {
+                return;
+            }
+
+            var teams = _teamQueries.GetTeamsByUser(openBy);
+            if (teams.All(x => x.Id != card.TeamId))
+            {
+                return;
+            }
+
+            _cardCommands.OpenPointing(cardId);
+        }
     }
 }
