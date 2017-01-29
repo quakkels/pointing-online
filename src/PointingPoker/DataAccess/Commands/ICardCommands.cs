@@ -7,5 +7,6 @@ namespace PointingPoker.DataAccess.Commands
         int CreateCard(Card card);
 
         void ClosePointing(int cardId, int userId);
+        void OpenPointing(int cardId);
     }
 }

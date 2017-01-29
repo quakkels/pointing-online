@@ -33,11 +33,13 @@ namespace PointingPoker.DataAccess.Queries
                 // RANK():
                 // https://msdn.microsoft.com/en-us/library/ms176102.aspx
                 var result = conn.Query<CardScore>(
-                    @"SELECT Id as CardId, PointedBy, Points FROM (
+                    @"SELECT Id as CardId, PointedBy, Points, UserName FROM (
                     SELECT 
 	                    Cards.Id, 
 	                    Points.PointedBy, 
-	                    Points.Points, 
+	                    Points.Points,
+						Users.UserName,
+                        Cards.ClosedBy,
 	                    RANK() OVER (
 		                    PARTITION BY 
 			                    Cards.Id, 
@@ -45,10 +47,12 @@ namespace PointingPoker.DataAccess.Queries
 			                    ORDER BY Points.DateCreated ASC
 	                    ) AS R FROM Points
                     INNER JOIN Cards on Points.CardId = Cards.Id
+					INNER JOIN Users on Users.Id = Points.PointedBy
                     ) a 
                     WHERE 
 	                    R = 1
-	                    and Id = @cardId",
+	                    and Id = @cardId
+                        and ClosedBy is not null",
                     new { cardId });
 
                 return result;

@@ -125,8 +125,35 @@ namespace PointingPoker.Controllers
 
         public ViewResult CardScore(int id)
         {
-            var model = _pointService.GetCardScore(id);
+            var model = new CardScoreViewModel
+            {
+                Card = _cardService.GetCard(id),
+                CardScores = _pointService.GetCardScore(id)
+            };
+
             return View(model);
+        }
+
+        public ViewResult Reopen(int id)
+        {
+            var model = _cardService.GetCard(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Reopen(Card model, bool shouldReopen)
+        {
+            if (shouldReopen)
+            {
+                _cardService.OpenPointing(_currentUserId, model.Id);
+            }
+            else
+            {
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(TeamController.Summary), "Team", new { id = model.TeamId });
         }
     }
 }
